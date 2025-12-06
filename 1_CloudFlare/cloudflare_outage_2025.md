@@ -86,7 +86,7 @@ flowchart LR
 
 ## **~16% całego ruchu internetowego** 🌍
 
-> Każdy szósty request w internecie przechodzi przez Cloudflare
+> Każdy co szósty request w internecie przechodzi przez Cloudflare
 
 ### Znani użytkownicy:
 | Kategoria | Firmy |
