@@ -1,0 +1,40 @@
+name: Convert Markdown to HTML and PDF
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Install marp-cli
+      run: npm install -g @marp-team/marp-cli
+
+    - name: Find and convert Markdown files
+      run: |
+        find . -name "*.md" -not -path "./.git/*" | while read file; do
+          dir=$(dirname "$file")
+          base=$(basename "$file" .md)
+          marp "$file" -o "$dir/$base.html"
+          marp --pdf "$file" -o "$dir/$base.pdf"
+        done
+
+    - name: Commit changes
+      uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        commit_message: "Auto-convert Markdown to HTML and PDF"
+        file_pattern: "*.html *.pdf"
