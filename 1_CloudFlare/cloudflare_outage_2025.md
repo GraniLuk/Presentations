@@ -42,6 +42,10 @@ style: |
     background-color: #f77f00;
     color: #1a1a2e;
   }
+  /* Ensure table text is readable when table background is white */
+  table, table th, table td {
+    color: #000000 !important;
+  }
 ---
 
 # 🔥 Awaria Cloudflare 2025
