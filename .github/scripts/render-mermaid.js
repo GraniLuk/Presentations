@@ -39,8 +39,27 @@ let rendered = content.replace(mermaidRegex, (m, code) => {
         return m; // leave original block
     }
     if (res.status !== 0) {
-        console.error('mmdc stderr:', res.stderr);
-        return m;
+        // mmdc failed (parser errors or unsupported diagram). Instead of
+        // printing the full stderr (which clutters CI logs), write a small
+        // placeholder SVG so the markdown still references an image.
+        try {
+            const placeholder = `<?xml version="1.0" encoding="UTF-8"?>\n` +
+                `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="120">` +
+                `<rect width="100%" height="100%" fill="#fff"/>` +
+                `<text x="10" y="24" font-size="16" fill="#b00020">Mermaid render failed: diagram skipped</text>` +
+                `<text x="10" y="48" font-size="12" fill="#333">File: ${filename}</text>` +
+                `</svg>`;
+            fs.writeFileSync(outPath, placeholder, 'utf8');
+        } catch (e) {
+            // If placeholder write fails, fallback to leaving original block.
+            return m;
+        }
+        // don't log the full mmdc stderr to CI; only a short warning
+        console.warn(`mmdc failed for ${filename}; inserted placeholder image.`);
+        // remove tmp file
+        try { fs.unlinkSync(tmpFile); } catch (e) { /* ignore */ }
+        const relPath = path.relative(path.dirname(output), outPath).replace(/\\/g, '/');
+        return `![](${relPath})`;
     }
 
     // remove tmp file
