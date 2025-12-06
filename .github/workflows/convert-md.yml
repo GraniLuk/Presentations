@@ -15,18 +15,29 @@ jobs:
       uses: actions/checkout@v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
+
+    - name: Get changed Markdown files
+      id: changed-files
+      uses: tj-actions/changed-files@v44
+      with:
+        files: |
+          **/*.md
 
     - name: Setup Node.js
+      if: steps.changed-files.outputs.any_changed == 'true'
       uses: actions/setup-node@v4
       with:
         node-version: '18'
 
     - name: Install marp-cli
+      if: steps.changed-files.outputs.any_changed == 'true'
       run: npm install -g @marp-team/marp-cli
 
-    - name: Find and convert Markdown files
+    - name: Convert changed Markdown files
+      if: steps.changed-files.outputs.any_changed == 'true'
       run: |
-        find . -name "*.md" -not -path "./.git/*" | while read file; do
+        echo "${{ steps.changed-files.outputs.all_changed_files }}" | tr ' ' '\n' | while read -r file; do
           dir=$(dirname "$file")
           base=$(basename "$file" .md)
           marp "$file" -o "$dir/$base.html"
@@ -34,7 +45,8 @@ jobs:
         done
 
     - name: Commit changes
+      if: steps.changed-files.outputs.any_changed == 'true'
       uses: stefanzweifel/git-auto-commit-action@v5
       with:
         commit_message: "Auto-convert Markdown to HTML and PDF"
-        file_pattern: "*.html *.pdf"
+        file_pattern: "**/*.html **/*.pdf"
