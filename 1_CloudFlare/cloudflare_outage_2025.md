@@ -105,15 +105,15 @@ flowchart LR
 
 ```mermaid
 timeline
-    title 18 listopada 2025 - Awaria Cloudflare (UTC)
-    11:05 : Wdrożono zmianę uprawnień w ClickHouse
-    11:20 : 🔴 Początek problemów - błędy 5xx
-    11:28 : Wdrożenie dociera do produkcji
-    11:32 : Analiza - początkowo podejrzenie DDoS
-    13:05 : Obejście dla Workers KV i Access
-    14:24 : Identyfikacja przyczyny - plik bot managementu
-    14:30 : 🟢 Wdrożenie poprawnego pliku
-    17:06 : 🟢 Pełna normalizacja
+  title 18 listopada 2025 - Awaria Cloudflare (UTC)
+  "11:05": "Wdrożono zmianę uprawnień w ClickHouse"
+  "11:20": "🔴 Początek problemów - błędy 5xx"
+  "11:28": "Wdrożenie dociera do produkcji"
+  "11:32": "Analiza - początkowo podejrzenie DDoS"
+  "13:05": "Obejście dla Workers KV i Access"
+  "14:24": "Identyfikacja przyczyny - plik bot managementu"
+  "14:30": "🟢 Wdrożenie poprawnego pliku"
+  "17:06": "🟢 Pełna normalizacja"
 ```
 
 ---
@@ -210,10 +210,10 @@ sequenceDiagram
     
     CH->>Gen: Zmienione uprawnienia
     Gen->>Gen: Generuj plik cech
-    Note over Gen: >200 cech (duplikaty)
+    Note over Gen: ">200 cech (duplikaty)"
     Gen->>FL2: Propaguj plik
     FL2->>FL2: append_with_names()
-    Note over FL2: 💥 unwrap() PANIC!
+    Note over FL2: "💥 unwrap() PANIC!"
     FL2->>User: ❌ HTTP 500
 ```
 
@@ -387,10 +387,10 @@ flowchart TB
 
 ```mermaid
 xychart-beta
-    title "Błędy HTTP 5xx podczas incydentu"
-    x-axis [11:00, 11:30, 12:00, 12:30, 13:00, 13:30, 14:00, 14:30, 15:00, 15:30, 16:00, 17:00]
-    y-axis "Wolumen błędów" 0 --> 100
-    line [5, 85, 70, 90, 60, 50, 45, 20, 15, 10, 8, 5]
+  title "Błędy HTTP 5xx podczas incydentu"
+  x-axis ["11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","17:00"]
+  y-axis "Wolumen błędów" 0 --> 100
+  line [5, 85, 70, 90, 60, 50, 45, 20, 15, 10, 8, 5]
 ```
 
 **Fluktuacje** = różne nody z różnymi wersjami pliku cech
@@ -419,20 +419,20 @@ xychart-beta
 mindmap
   root((Awaria Cloudflare))
     Przyczyna
-      Zmiana uprawnień ClickHouse
-      Brak dyskryminatora bazy
-      Duplikaty cech >200
+      "Zmiana uprawnień ClickHouse"
+      "Brak dyskryminatora bazy"
+      "Duplikaty cech >200"
     Błąd
-      Prealokacja pamięci
-      unwrap() w Rust
-      Brak graceful degradation
+      "Prealokacja pamięci"
+      "unwrap() w Rust"
+      "Brak graceful degradation"
     Skutek
-      16% internetu offline
-      ~6h do pełnego recovery
+      "16% internetu offline"
+      "~6h do pełnego recovery"
     Lekcje
-      Defensywne programowanie
-      Komunikacja zespołów
-      Testy na skali prod
+      "Defensywne programowanie"
+      "Komunikacja zespołów"
+      "Testy na skali prod"
 ```
 
 ---
