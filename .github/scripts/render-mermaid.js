@@ -26,7 +26,14 @@ let rendered = content.replace(mermaidRegex, (m, code) => {
     const tmpFile = path.join(assetsDir, `tmp-${idx}.mmd`);
     fs.writeFileSync(tmpFile, code.trim());
 
-    const res = spawnSync('mmdc', ['-i', tmpFile, '-o', outPath], { encoding: 'utf8' });
+    // Use puppeteer config for CI environments (no-sandbox mode)
+    const puppeteerConfigPath = path.join(__dirname, 'puppeteer-config.json');
+    const mmcdArgs = ['-i', tmpFile, '-o', outPath];
+    if (fs.existsSync(puppeteerConfigPath)) {
+        mmcdArgs.push('-p', puppeteerConfigPath);
+    }
+
+    const res = spawnSync('mmdc', mmcdArgs, { encoding: 'utf8' });
     if (res.error) {
         console.error('Failed to run mmdc:', res.error);
         return m; // leave original block
