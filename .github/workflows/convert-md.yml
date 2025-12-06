@@ -61,5 +61,5 @@ jobs:
       uses: stefanzweifel/git-auto-commit-action@v7
       with:
         commit_message: "Auto-convert Markdown to HTML and PDF (rendered mermaid diagrams)"
-        file_pattern: "**/*.html **/*.pdf **/*.rendered.md assets/**/**"
+        file_pattern: "**/*.html **/*.pdf **/*.rendered.md **/assets/**/**"
         branch: ${{ github.ref_name }}
