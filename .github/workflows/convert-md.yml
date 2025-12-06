@@ -36,19 +36,29 @@ jobs:
       if: steps.changed-files.outputs.any_changed == 'true'
       run: npm install -g @marp-team/marp-cli
 
-    - name: Convert changed Markdown files
+    - name: Install mermaid-cli
+      if: steps.changed-files.outputs.any_changed == 'true'
+      run: npm install -g @mermaid-js/mermaid-cli
+
+    - name: Convert changed Markdown files (with mermaid pre-render)
       if: steps.changed-files.outputs.any_changed == 'true'
       run: |
         echo "${{ steps.changed-files.outputs.all_changed_files }}" | tr ' ' '\n' | while read -r file; do
           dir=$(dirname "$file")
           base=$(basename "$file" .md)
-          marp "$file" -o "$dir/$base.html"
-          marp --pdf "$file" -o "$dir/$base.pdf"
+          # Pre-render mermaid diagrams into images and create a rendered markdown copy
+          node .github/scripts/render-mermaid.js "$file" "$dir/$base.rendered.md"
+          in_file="$file"
+          if [ -f "$dir/$base.rendered.md" ]; then
+            in_file="$dir/$base.rendered.md"
+          fi
+          marp "$in_file" -o "$dir/$base.html"
+          marp --pdf "$in_file" -o "$dir/$base.pdf"
         done
 
     - name: Commit changes
       if: steps.changed-files.outputs.any_changed == 'true'
       uses: stefanzweifel/git-auto-commit-action@v5
       with:
-        commit_message: "Auto-convert Markdown to HTML and PDF"
-        file_pattern: "**/*.html **/*.pdf"
+        commit_message: "Auto-convert Markdown to HTML and PDF (rendered mermaid diagrams)"
+        file_pattern: "**/*.html **/*.pdf **/*.rendered.md assets/**/**"
