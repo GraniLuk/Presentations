@@ -462,4 +462,4 @@ mindmap
        🛡️ Post-Mortem 18.11.2025 🛡️
 ```
 
-**Kontakt:** [Twój email/Slack]
+**Kontakt:** granica.lukasz@gmail.com
