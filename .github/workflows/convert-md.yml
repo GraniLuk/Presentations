@@ -53,7 +53,7 @@ jobs:
             in_file="$dir/$base.rendered.md"
           fi
           marp "$in_file" -o "$dir/$base.html"
-          marp --pdf "$in_file" -o "$dir/$base.pdf"
+          marp --pdf --allow-local-files "$in_file" -o "$dir/$base.pdf"
         done
 
     - name: Commit changes
