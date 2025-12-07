@@ -105,7 +105,7 @@ flowchart LR
 
 ```mermaid
 timeline
-  title 18 listopada 2025 - Awaria Cloudflare (UTC)
+  title 18 listopada 2025 Awaria Cloudflare (UTC)
   "11:05": "Wdrożono zmianę uprawnień w ClickHouse"
   "11:20": "🔴 Początek problemów - błędy 5xx"
   "11:28": "Wdrożenie dociera do produkcji"
@@ -424,7 +424,7 @@ mindmap
       "Duplikaty cech >200"
     Błąd
       "Prealokacja pamięci"
-      "unwrap() w Rust"
+      "unwrap w Rust"
       "Brak graceful degradation"
     Skutek
       "16% internetu offline"
