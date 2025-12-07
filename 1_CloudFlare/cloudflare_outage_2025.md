@@ -104,15 +104,16 @@ flowchart LR
 # ⏰ Timeline awarii
 
 ```mermaid
-  title 18 listopada 2025 Awaria Cloudflare
-  11_05 : Wdrożono zmianę uprawnień w ClickHouse
-  11_20 : 🔴 Początek problemów - błędy 5xx
-  11_28 : Wdrożenie dociera do produkcji
-  11_32 : Analiza - początkowo podejrzenie DDoS
-  13_05 : Obejście dla Workers KV i Access
-  14_24 : Identyfikacja przyczyny - plik bot managementu
-  14_30 : 🟢 Wdrożenie poprawnego pliku
-  17_06 : 🟢 Pełna normalizacja
+timeline
+    title 18 listopada 2025 Awaria Cloudflare (UTC)
+    11_05 : Wdrożono zmianę uprawnień w ClickHouse
+    11_20 : 🔴 Początek problemów - błędy 5xx
+    11_28 : Wdrożenie dociera do produkcji
+    11_32 : Analiza - początkowo podejrzenie DDoS
+    13_05 : Obejście dla Workers KV i Access
+    14_24 : Identyfikacja przyczyny - plik bot managementu
+    14_30 : 🟢 Wdrożenie poprawnego pliku
+    17_06 : 🟢 Pełna normalizacja
 ```
 
 ---
