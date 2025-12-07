@@ -31,12 +31,26 @@ let rendered = content.replace(mermaidRegex, (m, code) => {
         code = code.replace(widthRegex, '').trim(); // also remove the comment
     }
 
+    let height = null; // default height
+    const heightRegex = /%%\s*height:\s*(\d+)/;
+    const heightMatch = code.match(heightRegex);
+    if (heightMatch) {
+        height = parseInt(heightMatch[1], 10);
+        code = code.replace(heightRegex, '').trim();
+    }
+
     const tmpFile = path.join(assetsDir, `tmp-${idx}.mmd`);
     fs.writeFileSync(tmpFile, code.trim());
 
     // Use puppeteer config for CI environments (no-sandbox mode)
     const puppeteerConfigPath = path.join(__dirname, 'puppeteer-config.json');
     const mmcdArgs = ['-i', tmpFile, '-o', outPath, '-w', width.toString()];
+    if (height !== null) {
+        mmcdArgs.push('-H', height.toString());
+    }
+    if (fs.existsSync(puppeteerConfigPath)) {
+        mmcdArgs.push('-p', puppeteerConfigPath);
+    }
     if (fs.existsSync(puppeteerConfigPath)) {
         mmcdArgs.push('-p', puppeteerConfigPath);
     }
