@@ -23,12 +23,20 @@ let rendered = content.replace(mermaidRegex, (m, code) => {
     const filename = `mermaid-${idx}.svg`;
     const outPath = path.join(assetsDir, filename);
 
+    const widthRegex = /%%\s*width:\s*(\d+)/;
+    const widthMatch = code.match(widthRegex);
+    let width = 1024; // Default width
+    if (widthMatch) {
+        width = parseInt(widthMatch[1], 10);
+        code = code.replace(widthRegex, '').trim(); // also remove the comment
+    }
+
     const tmpFile = path.join(assetsDir, `tmp-${idx}.mmd`);
     fs.writeFileSync(tmpFile, code.trim());
 
     // Use puppeteer config for CI environments (no-sandbox mode)
     const puppeteerConfigPath = path.join(__dirname, 'puppeteer-config.json');
-    const mmcdArgs = ['-i', tmpFile, '-o', outPath];
+    const mmcdArgs = ['-i', tmpFile, '-o', outPath, '-w', width.toString()];
     if (fs.existsSync(puppeteerConfigPath)) {
         mmcdArgs.push('-p', puppeteerConfigPath);
     }
