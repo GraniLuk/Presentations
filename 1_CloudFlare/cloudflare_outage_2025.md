@@ -27,6 +27,17 @@ style: |
   .mermaid {
     background-color: transparent;
   }
+  .mermaid svg {
+    max-height: 350px;
+    width: auto;
+  }
+  /* Rendered mermaid images from pipeline */
+  section img[alt="mermaid diagram"] {
+    max-height: 350px;
+    width: auto;
+    display: block;
+    margin: 0 auto;
+  }
   strong {
     color: #f77f00;
   }

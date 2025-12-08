@@ -48,11 +48,11 @@ let rendered = content.replace(mermaidRegex, (m, code) => {
     if (fs.existsSync(puppeteerConfigPath)) {
         mmcdArgs.push('-p', puppeteerConfigPath);
     }
-    if (fs.existsSync(puppeteerConfigPath)) {
-        mmcdArgs.push('-p', puppeteerConfigPath);
-    }
 
-    const res = spawnSync('mmdc', mmcdArgs, { encoding: 'utf8' });
+    const isWindows = process.platform === 'win32';
+    const res = spawnSync(isWindows ? 'cmd' : 'npx',
+        isWindows ? ['/c', 'npx', '-y', '@mermaid-js/mermaid-cli', ...mmcdArgs] : ['-y', '@mermaid-js/mermaid-cli', ...mmcdArgs],
+        { encoding: 'utf8' });
     if (res.error) {
         console.error('Failed to run mmdc:', res.error);
         return m; // leave original block
@@ -68,9 +68,9 @@ let rendered = content.replace(mermaidRegex, (m, code) => {
     // remove tmp file
     try { fs.unlinkSync(tmpFile); } catch (e) { console.error(`Failed to delete temporary file ${tmpFile}:`, e); }
 
-    // return markdown image link (relative path)
+    // return HTML img tag with explicit dimensions for proper sizing in Marp PDF/HTML
     const relPath = path.relative(path.dirname(output), outPath).replace(/\\/g, '/');
-    return `![](${relPath})`;
+    return `<img src="${relPath}" alt="mermaid diagram" style="max-height: ${height}px; width: auto; display: block; margin: 0 auto;">`;
 });
 
 fs.writeFileSync(output, rendered, 'utf8');
