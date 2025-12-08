@@ -25,13 +25,13 @@ let rendered = content.replace(mermaidRegex, (m, code) => {
 
     const widthRegex = /%%\s*width:\s*(\d+)/;
     const widthMatch = code.match(widthRegex);
-    let width = 1024; // Default width
+    let width = 800; // Default width is narrower to fit slides
     if (widthMatch) {
         width = parseInt(widthMatch[1], 10);
         code = code.replace(widthRegex, '').trim(); // also remove the comment
     }
 
-    let height = null; // default height
+    let height = 300; // Default height keeps diagrams visible without scrolling
     const heightRegex = /%%\s*height:\s*(\d+)/;
     const heightMatch = code.match(heightRegex);
     if (heightMatch) {
@@ -44,10 +44,7 @@ let rendered = content.replace(mermaidRegex, (m, code) => {
 
     // Use puppeteer config for CI environments (no-sandbox mode)
     const puppeteerConfigPath = path.join(__dirname, 'puppeteer-config.json');
-    const mmcdArgs = ['-i', tmpFile, '-o', outPath, '-w', width.toString()];
-    if (height !== null) {
-        mmcdArgs.push('-H', height.toString());
-    }
+    const mmcdArgs = ['-i', tmpFile, '-o', outPath, '-w', width.toString(), '-H', height.toString()];
     if (fs.existsSync(puppeteerConfigPath)) {
         mmcdArgs.push('-p', puppeteerConfigPath);
     }

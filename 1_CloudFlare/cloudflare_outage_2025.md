@@ -51,7 +51,7 @@ style: |
 # 🔥 Awaria Cloudflare 2025
 ## Jak jeden plik "położył" 16% internetu
 
-**Geeks Club2**
+**Geeks Club**
 
 📅 10 grudnia 2025 r.
 
