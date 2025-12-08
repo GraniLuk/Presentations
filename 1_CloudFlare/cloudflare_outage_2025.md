@@ -304,18 +304,16 @@ flowchart TB
 
 ## Co można było zrobić lepiej?
 
-```mermaid
-flowchart TB
-    A[Pobrano >200 cech] --> B{Sprawdź limit}
-    B -->|Przekroczono| C[Weź pierwsze 200]
-    C --> D[Log warning]
-    D --> E[✅ Kontynuuj działanie]
-    
-    B -->|OK| E
-    
-    style C fill:#2d5016
-    style D fill:#2d5016
+```rust
+let features = append_with_names(&config).unwrap_or_default();
+if features.len() > 200 {
+    log::warn!("Pobrano {} cech, przekroczono limit 200. Biorę pierwsze 200.", features.len());
+    features.truncate(200);
+}
+// ✅ Kontynuuj działanie z features
 ```
+
+---
 
 ### Zamiast:
 ```rust
