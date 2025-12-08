@@ -223,7 +223,16 @@ fn load_features(config: &Config) -> Features {
 
 ## Co można było zrobić lepiej?
 
-<img src="assets/mermaid/mermaid-8.svg" alt="mermaid diagram" style="max-height: 300px; width: auto; display: block; margin: 0 auto;">
+```rust
+let features = append_with_names(&config).unwrap_or_default();
+if features.len() > 200 {
+    log::warn!("Pobrano {} cech, przekroczono limit 200. Biorę pierwsze 200.", features.len());
+    features.truncate(200);
+}
+// ✅ Kontynuuj działanie z features
+```
+
+---
 
 ### Zamiast:
 ```rust
@@ -239,7 +248,7 @@ fn load_features(config: &Config) -> Features {
 
 # 🏢 Problem organizacyjny
 
-<img src="assets/mermaid/mermaid-9.svg" alt="mermaid diagram" style="max-height: 300px; width: auto; display: block; margin: 0 auto;">
+<img src="assets/mermaid/mermaid-8.svg" alt="mermaid diagram" style="max-height: 300px; width: auto; display: block; margin: 0 auto;">
 
 ## 🎯 Kluczowy problem:
 **Zmiana w jednym miejscu → eksplozja w innym**
@@ -250,7 +259,7 @@ fn load_features(config: &Config) -> Features {
 
 ## Możliwe wyjaśnienie:
 
-<img src="assets/mermaid/mermaid-10.svg" alt="mermaid diagram" style="max-height: 300px; width: auto; display: block; margin: 0 auto;">
+<img src="assets/mermaid/mermaid-9.svg" alt="mermaid diagram" style="max-height: 300px; width: auto; display: block; margin: 0 auto;">
 
 **Skala produkcji ≠ Skala testów**
 
@@ -280,7 +289,7 @@ fn load_features(config: &Config) -> Features {
 
 # 📈 Wizualizacja awarii
 
-<img src="assets/mermaid/mermaid-11.svg" alt="mermaid diagram" style="max-height: 300px; width: auto; display: block; margin: 0 auto;">
+<img src="assets/mermaid/mermaid-10.svg" alt="mermaid diagram" style="max-height: 300px; width: auto; display: block; margin: 0 auto;">
 
 **Fluktuacje** = różne nody z różnymi wersjami pliku cech
 
@@ -304,7 +313,7 @@ fn load_features(config: &Config) -> Features {
 
 # 🎯 Podsumowanie
 
-<img src="assets/mermaid/mermaid-12.svg" alt="mermaid diagram" style="max-height: 300px; width: auto; display: block; margin: 0 auto;">
+<img src="assets/mermaid/mermaid-11.svg" alt="mermaid diagram" style="max-height: 300px; width: auto; display: block; margin: 0 auto;">
 
 ---
 
