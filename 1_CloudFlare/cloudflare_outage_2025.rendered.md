@@ -256,6 +256,8 @@ fn load_features(config: &Config) -> Features {
 
 ---
 
+<!-- style: h2 { font-size: 0.8em; } blockquote { font-size: 0.7em; } -->
+
 # 🔥 Kluczowe lekcje
 
 ## 1️⃣ Defensywne programowanie
