@@ -67,6 +67,9 @@ style: |
 
 📅 December 10, 2025
 
+<!---
+So like everyone else, I got hit by the CloudFlare outage at November 18th. After reading their post morten (which was honestly really detailed and transparent - mad respect for the team working hard to keep us all safe), I wanted to share some thoughts what can we learn from this mistake.
+-->
 ---
 
 # 📋 Agenda
@@ -78,9 +81,6 @@ style: |
 5. 📝 **Conclusions and Remedial Actions**
 6. 💭 **Comment** - What do we learn from this?
 
-<!---
-So like everyone else, I got hit by the CloudFlare outage at November 18th. After reading their post morten (which was honestly really detailed and transparent - mad respect for the team working hard to keep us all safe), I wanted to share some thoughts what can we learn from this mistake.
--->
 ---
 
 # 🌐 What is Cloudflare?
@@ -176,6 +176,14 @@ ORDER BY name;
 - After permission change → both databases visible
 - **60 features × 2 = 120+** features
 
+<!--
+Krytyczna Zmiana: Uprawnienia w ClickHouse
+W ramach Cloudflare nastąpiły prace modernizacyjne dotyczące zmiany uprawnień. To spowodowało, że zapytanie SQL, które pobierało cechy, zaczęło zachowywać się inaczej.
+
+Problem z zapytaniem: Zapytanie nie zawierało jawnego selektora bazy danych (dyskryminatora). Zawsze z założenia operowało na bazie default.
+Skutek zmiany uprawnień: Nowe uprawnienia sprawiły, że zapytanie zaczęło wciągać dane nie tylko z bazy default, ale również z bazy R0.
+Rezultat: Zamiast 60 cech, zapytanie zaczęło zwracać ponad 200, ponieważ otrzymywało zarówno zagregowane cechy z widoku w default, jak i zduplikowane, surowe cechy z poszczególnych shardów w R0.
+-->
 ---
 
 # 🦀 Rust and fatal `unwrap()`
@@ -196,17 +204,25 @@ fn load_features(config: &Config) -> Features {
 - **Received:** >200 features (duplicates)
 - **Result:** `Result::unwrap()` on `Err` → **PANIC** 💀
 
----
+<!--
+Kod w Języku Rust i Metoda unwrap()
+Na chłopski rozum można pomyśleć: "co to za problem, że zapytanie zwróciło 200 rekordów zamiast 60?". Problem polega na tym, że obszar Bot Managementu jest napisany w Raście.
 
-# ⏰ Outage Timeline
-
-![w:auto h:300](assets/mermaid/mermaid-4.svg)
+Zarządzanie pamięcią: Programiści Cloudflare, chcąc wyśrubować wydajność, starają się precyzyjnie alokować pamięć. Pamięć na cechy była prealokowana na 200 pozycji. Sami przyznali, że 200 to i tak znacznie więcej niż standardowe 60, więc mieli bufor (trzy razy tyle). Okazało się, że to nie wystarczyło.
+Metoda unwrap(): W kodzie, który obiegł internet, znajdował się fragment wczytujący konfigurację, który na końcu używał metody unwrap().
+Czym jest unwrap()? W Raście nie ma null. Zamiast tego często używa się typu Result<T, Error>, który może zawierać albo poprawny wynik (T), albo błąd (Error). Metoda unwrap() działa na zasadzie "daj mi wynik albo spanikuj" (get or panic). Jeśli Result zawiera błąd, unwrap() powoduje panikę, co w uproszczeniu można przetłumaczyć na twardy wyjątek, który wywala całą aplikację.
+Dla Dotnetowców: To trochę jakby wywołanie await na Task<T> zwracało T, ale unwrap() dodatkowo powoduje awarię, jeśli operacja się nie powiodła.
+Przebieg awarii w kodzie:
+Funkcja append_with_names, próbując dodać ponad 200 cech do prealokowanego bufora, zwróciła obiekt błędu (Error).
+Metoda unwrap() została wywołana na tym obiekcie błędu.
+Nastąpiła panika, co widać w logach: FL2 (Frontline 2) worker panicked at 'called Result::unwrap()on anErr value'.
+-->
 
 ---
 
 # 💥 Outage Mechanism
 
-![w:auto h:300](assets/mermaid/mermaid-5.svg)
+![w:auto h:300](assets/mermaid/mermaid-4.svg)
 
 ---
 
@@ -214,7 +230,7 @@ fn load_features(config: &Config) -> Features {
 
 ## Why did they think it was a DDoS attack?
 
-![w:auto h:300](assets/mermaid/mermaid-6.svg)
+![w:auto h:300](assets/mermaid/mermaid-5.svg)
 
 ### Unusual behavior:
 - Fluctuations: old nodes had correct cache
@@ -222,25 +238,9 @@ fn load_features(config: &Config) -> Features {
 
 ---
 
-# 📊 Impact on Services
+# ⏰ Outage Timeline
 
-| Service | Impact |
-|---------|--------|
-| 🌐 **CDN / Security** | HTTP 5xx for all clients |
-| 🔐 **Turnstile** | Complete failure |
-| 📦 **Workers KV** | Increased error rate |
-| 📊 **Dashboard** | Unable to log in |
-| 🔑 **Access** | Authentication errors |
-| 📧 **Email Security** | Reduced spam detection |
-
----
-
-# 🔧 FL vs FL2 - Different Impact
-
-![w:auto h:300](assets/mermaid/mermaid-7.svg)
-
-**FL2**: Hard 500 errors  
-**FL**: Everything = "not-bot" → blocking rule issues
+![w:auto h:300](assets/mermaid/mermaid-6.svg)
 
 ---
 
@@ -297,7 +297,7 @@ The part that's interesting to me is there was no fallback. No "hey something's 
 
 ### Why did the update keep spreading?
 
-![w:auto h:300](assets/mermaid/mermaid-8.svg)
+![w:auto h:300](assets/mermaid/mermaid-7.svg)
 
 **Automated rollouts without real-time monitoring** → Errors propagate unchecked
 
@@ -305,7 +305,7 @@ The part that's interesting to me is there was no fallback. No "hey something's 
 
 ### Circuit Breaker Pattern for Deployments
 
-![w:auto h:300](assets/mermaid/mermaid-9.svg)
+![w:auto h:300](assets/mermaid/mermaid-8.svg)
 
 **Stop propagation if errors exceed safe limits**
 
@@ -326,7 +326,7 @@ The part that's interesting to me is there was no fallback. No "hey something's 
 
 # 🏢 Organizational Problem
 
-![w:auto h:300](assets/mermaid/mermaid-10.svg)
+![w:auto h:300](assets/mermaid/mermaid-9.svg)
 
 ## 🎯 Key problem:
 **Change in one place → explosion in another**
@@ -337,7 +337,7 @@ The part that's interesting to me is there was no fallback. No "hey something's 
 
 ## Possible explanation:
 
-![w:auto h:300](assets/mermaid/mermaid-11.svg)
+![w:auto h:300](assets/mermaid/mermaid-10.svg)
 
 **Production scale ≠ Test scale**
 
@@ -367,7 +367,7 @@ The part that's interesting to me is there was no fallback. No "hey something's 
 
 # 📈 Outage Visualization
 
-![w:auto h:300](assets/mermaid/mermaid-12.svg)
+![w:auto h:300](assets/mermaid/mermaid-11.svg)
 
 **Fluctuations** = different nodes with different feature file versions
 
@@ -391,7 +391,7 @@ The part that's interesting to me is there was no fallback. No "hey something's 
 
 # 🎯 Summary
 
-![w:auto h:300](assets/mermaid/mermaid-13.svg)
+![w:auto h:300](assets/mermaid/mermaid-12.svg)
 
 ---
 
