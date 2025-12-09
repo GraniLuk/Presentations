@@ -141,14 +141,30 @@ Proces: Zestaw cech jest pakowany do pliku, który jest generowany co 5 minut. P
 
 ---
 
-
-
-
 # 🗃️ ClickHouse Architecture
 
 ## Databases and shards
 
-![w:auto h:300](assets/mermaid/mermaid-3.svg)
+```mermaid
+flowchart LR
+    subgraph ClickHouse Architecture
+        S1[Shard 1] --> R0[Database 'R0'<br/>(physical data)]
+        S2[Shard 2] --> R0
+        SN[Shard N] --> R0
+        R0 --> Default[Database 'default'<br/>(aggregated view)]
+        Default --> Q[SQL Query]
+    end
+```
+
+<!--
+Infrastruktura Bazy Danych: ClickHouse
+Cała infrastruktura, gdzie przetrzymywane były te cechy, była spięta poprzez ClickHouse, rozproszoną bazę danych.
+
+Struktura: Mieliśmy bazę, która posiadała listę shardów. Pod spodem mieliśmy shardy w konkretnych bazach.
+Baza default: Główny węzeł, który zawierał listę wszystkich shardów.
+Baza R0: Zawierała konkretne shardy.
+Działanie: Dla użytkownika jest to transparentne. Odpytuje jedną bazę, a pod spodem dzieje się cała magia z wyszukiwaniem, łączeniem rezultatów i zwracaniem ich jako projekcji (widoku).
+-->
 
 ---
 
