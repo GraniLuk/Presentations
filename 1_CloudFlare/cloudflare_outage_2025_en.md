@@ -107,11 +107,11 @@ flowchart LR
 ```
 
 <!-- 
-- DDoS Protection: Blokuje ataki typu Distributed Denial of Service
-- Caching: Przechowuje kopie treści dla szybszego dostarczania
-- Bot Management: Wykrywa i zarządza ruchem botów (automatycznym)
-- CDN: Content Delivery Network - rozprowadza treści globalnie
-- WAF: Web Application Firewall - chroni przed atakami webowymi
+- DDoS Protection: Blocks Distributed Denial of Service attacks
+- Caching: Stores copies of content for faster delivery
+- Bot Management: Detects and manages bot traffic (automated)
+- CDN: Content Delivery Network - distributes content globally
+- WAF: Web Application Firewall - protects against web attacks
 -->
 
 ---
@@ -130,7 +130,7 @@ flowchart LR
 | 💬 Social | Reddit, Twitter |
 
 <!--
-Zapytaj jak ludzie doświadczyli awarii
+Ask how people experienced the outage
 -->
 ---
 
@@ -153,17 +153,17 @@ flowchart TB
 **Bot Score**: 0-99 (higher = greater bot probability)
 
 <!--
-Problem u Źródła: Funkcja Wykrywania Botów
-Problem dotyczy feature'a związanego z wykrywaniem różnych botów, które wchodzą do infrastruktury przez Cloudflare. System analizuje ruch i decyduje, czy go przepuścić, czy zablokować.
+Problem at the Source: Bot Detection Function
+The problem concerns a feature related to detecting various bots that enter the infrastructure through Cloudflare. The system analyzes traffic and decides whether to allow or block it.
 
-Bot Scoring: W dużym uproszczeniu, jest to ocena od 0 do 99, która określa prawdopodobieństwo, czy request pochodzi od człowieka, czy od bota. Im wyższy wynik, tym większe prawdopodobieństwo, że to bot.
-Technologia: Usługa ta opiera się na uczeniu maszynowym i analizuje zbiór cech (features) danego requestu.
-Architektura i Konfiguracja
-Lista cech nie jest sztywna. Jest na bieżąco aktualizowana na podstawie całego ruchu, który widzi Cloudflare, i propagowana na wszystkie instancje decydujące o przepuszczaniu ruchu.
+Bot Scoring: In a big simplification, it's a score from 0 to 99 that determines the probability of whether the request comes from a human or a bot. The higher the score, the greater the probability that it's a bot.
+Technology: This service is based on machine learning and analyzes a set of features (features) of a given request.
+Architecture and Configuration
+The list of features is not fixed. It is continuously updated based on all traffic that Cloudflare sees, and propagated to all instances deciding on traffic passage.
 
-Liczba cech: W momencie awarii było ich około 60.
-Założony limit: Infrastruktura była przygotowana na maksymalnie 200 cech do analizy.
-Proces: Zestaw cech jest pakowany do pliku, który jest generowany co 5 minut. Plik ten jest rozpropagowywany do modułu Bot Managementu, który na jego podstawie dokonuje asercji ML-owej.
+Number of features: At the time of the outage, there were about 60.
+Assumed limit: The infrastructure was prepared for a maximum of 200 features for analysis.
+Process: The set of features is packed into a file, which is generated every 5 minutes. This file is propagated to the Bot Management module, which makes ML assertions based on it.
 -->
 
 ---
@@ -184,13 +184,13 @@ flowchart LR
 ```
 
 <!--
-Infrastruktura Bazy Danych: ClickHouse
-Cała infrastruktura, gdzie przetrzymywane były te cechy, była spięta poprzez ClickHouse, rozproszoną bazę danych.
+Database Infrastructure: ClickHouse
+The entire infrastructure where these features were stored was connected via ClickHouse, a distributed database.
 
-Struktura: Mieliśmy bazę, która posiadała listę shardów. Pod spodem mieliśmy shardy w konkretnych bazach.
-Baza default: Główny węzeł, który zawierał listę wszystkich shardów.
-Baza R0: Zawierała konkretne shardy.
-Działanie: Dla użytkownika jest to transparentne. Odpytuje jedną bazę, a pod spodem dzieje się cała magia z wyszukiwaniem, łączeniem rezultatów i zwracaniem ich jako projekcji (widoku).
+Structure: There was a database that had a list of shards. Underneath they had shards in specific databases.
+Default database: The main node that contained a list of all shards.
+R0 database: Contained specific shards.
+Operation: For the user it is transparent. Queries one database, and underneath all the magic happens with searching, combining results and returning them as a projection (view).
 -->
 
 ---
@@ -213,12 +213,12 @@ ORDER BY name;
 - **60 features × 2 = 120+** features
 
 <!--
-Krytyczna Zmiana: Uprawnienia w ClickHouse
-W ramach Cloudflare nastąpiły prace modernizacyjne dotyczące zmiany uprawnień. To spowodowało, że zapytanie SQL, które pobierało cechy, zaczęło zachowywać się inaczej.
+Critical Change: Permissions in ClickHouse
+As part of Cloudflare, modernization work was carried out regarding permission changes. This caused the SQL query that retrieved features to behave differently.
 
-Problem z zapytaniem: Zapytanie nie zawierało jawnego selektora bazy danych (dyskryminatora). Zawsze z założenia operowało na bazie default.
-Skutek zmiany uprawnień: Nowe uprawnienia sprawiły, że zapytanie zaczęło wciągać dane nie tylko z bazy default, ale również z bazy R0.
-Rezultat: Zamiast 60 cech, zapytanie zaczęło zwracać ponad 200, ponieważ otrzymywało zarówno zagregowane cechy z widoku w default, jak i zduplikowane, surowe cechy z poszczególnych shardów w R0.
+Query problem: The query did not contain an explicit database selector (discriminator). It always operated on the default database by assumption.
+Effect of permission change: New permissions caused the query to start pulling data not only from the default database, but also from the R0 database.
+Result: Instead of 60 features, the query started returning over 200, because it received both aggregated features from the view in default, and duplicated, raw features from individual shards in R0.
 -->
 ---
 
@@ -241,17 +241,17 @@ fn load_features(config: &Config) -> Features {
 - **Result:** `Result::unwrap()` on `Err` → **PANIC** 💀
 
 <!--
-Kod w Języku Rust i Metoda unwrap()
-Na chłopski rozum można pomyśleć: "co to za problem, że zapytanie zwróciło 200 rekordów zamiast 60?". Problem polega na tym, że obszar Bot Managementu jest napisany w Raście.
+Code in Rust Language and unwrap() Method
+In simple terms, one might think: "what's the problem if the query returned 200 records instead of 60?". The problem is that the Bot Management area is written in Rust.
 
-Zarządzanie pamięcią: Programiści Cloudflare, chcąc wyśrubować wydajność, starają się precyzyjnie alokować pamięć. Pamięć na cechy była prealokowana na 200 pozycji. Sami przyznali, że 200 to i tak znacznie więcej niż standardowe 60, więc mieli bufor (trzy razy tyle). Okazało się, że to nie wystarczyło.
-Metoda unwrap(): W kodzie, który obiegł internet, znajdował się fragment wczytujący konfigurację, który na końcu używał metody unwrap().
-Czym jest unwrap()? W Raście nie ma null. Zamiast tego często używa się typu Result<T, Error>, który może zawierać albo poprawny wynik (T), albo błąd (Error). Metoda unwrap() działa na zasadzie "daj mi wynik albo spanikuj" (get or panic). Jeśli Result zawiera błąd, unwrap() powoduje panikę, co w uproszczeniu można przetłumaczyć na twardy wyjątek, który wywala całą aplikację.
-Dla Dotnetowców: To trochę jakby wywołanie await na Task<T> zwracało T, ale unwrap() dodatkowo powoduje awarię, jeśli operacja się nie powiodła.
-Przebieg awarii w kodzie:
-Funkcja append_with_names, próbując dodać ponad 200 cech do prealokowanego bufora, zwróciła obiekt błędu (Error).
-Metoda unwrap() została wywołana na tym obiekcie błędu.
-Nastąpiła panika, co widać w logach: FL2 (Frontline 2) worker panicked at 'called Result::unwrap()on anErr value'.
+Memory management: Cloudflare programmers, wanting to maximize performance, try to precisely allocate memory. Memory for features was preallocated for 200 positions. They admitted that 200 is still much more than the standard 60, so they had a buffer (three times as much). It turned out that it wasn't enough.
+unwrap() method: In the code that went viral, there was a snippet loading the configuration, which at the end used the unwrap() method.
+What is unwrap()? In Rust there is no null. Instead, the Result<T, Error> type is often used, which can contain either a correct result (T), or an error (Error). The unwrap() method works on the principle "give me the result or panic" (get or panic). If Result contains an error, unwrap() causes a panic, which in simplification can be translated as a hard exception that crashes the entire application.
+For Dotnet people: It's a bit like calling await on Task<T> returns T, but unwrap() additionally causes a failure if the operation failed.
+Outage course in code:
+The append_with_names function, trying to add over 200 features to the preallocated buffer, returned an error object (Error).
+The unwrap() method was called on this error object.
+A panic occurred, as seen in the logs: FL2 (Frontline 2) worker panicked at 'called Result::unwrap()on anErr value'.
 -->
 
 ---
