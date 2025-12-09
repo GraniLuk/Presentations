@@ -54,7 +54,7 @@ style: |
     color: #1a1a2e;
   }
   /* Ensure table text is readable when table background is white */
-  td {
+  section table td {
     color: #000000 !important;
   }
 ---
