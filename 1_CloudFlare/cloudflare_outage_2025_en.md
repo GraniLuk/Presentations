@@ -95,6 +95,14 @@ flowchart LR
     B --> H[🔥 WAF]
 ```
 
+<!-- 
+- DDoS Protection: Blokuje ataki typu Distributed Denial of Service
+- Caching: Przechowuje kopie treści dla szybszego dostarczania
+- Bot Management: Wykrywa i zarządza ruchem botów (automatycznym)
+- CDN: Content Delivery Network - rozprowadza treści globalnie
+- WAF: Web Application Firewall - chroni przed atakami webowymi
+-->
+
 ---
 
 # 📊 Cloudflare Scale
