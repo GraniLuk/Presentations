@@ -203,6 +203,14 @@ ORDER BY name;
 - After permission change → both databases visible
 - **60 features × 2 = 120+** features
 
+<!--
+Krytyczna Zmiana: Uprawnienia w ClickHouse
+W ramach Cloudflare nastąpiły prace modernizacyjne dotyczące zmiany uprawnień. To spowodowało, że zapytanie SQL, które pobierało cechy, zaczęło zachowywać się inaczej.
+
+Problem z zapytaniem: Zapytanie nie zawierało jawnego selektora bazy danych (dyskryminatora). Zawsze z założenia operowało na bazie default.
+Skutek zmiany uprawnień: Nowe uprawnienia sprawiły, że zapytanie zaczęło wciągać dane nie tylko z bazy default, ale również z bazy R0.
+Rezultat: Zamiast 60 cech, zapytanie zaczęło zwracać ponad 200, ponieważ otrzymywało zarówno zagregowane cechy z widoku w default, jak i zduplikowane, surowe cechy z poszczególnych shardów w R0.
+-->
 ---
 
 # 🦀 Rust and fatal `unwrap()`
@@ -223,21 +231,19 @@ fn load_features(config: &Config) -> Features {
 - **Received:** >200 features (duplicates)
 - **Result:** `Result::unwrap()` on `Err` → **PANIC** 💀
 
----
+<!--
+Kod w Języku Rust i Metoda unwrap()
+Na chłopski rozum można pomyśleć: "co to za problem, że zapytanie zwróciło 200 rekordów zamiast 60?". Problem polega na tym, że obszar Bot Managementu jest napisany w Raście.
 
-# ⏰ Outage Timeline
-
-```mermaid
-timeline
-    title November 18, 2025 Cloudflare Outage (UTC)
-    11_05 : Permission change deployed in ClickHouse
-    11_20 : 🔴 Start of issues - 5xx errors
-    11_28 : Deployment reaches production
-    13_05 : Workaround for Workers KV and Access
-    14_24 : Root cause identified - bot management file
-    14_30 : 🟢 Correct file deployed
-    17_06 : 🟢 Full normalization
-```
+Zarządzanie pamięcią: Programiści Cloudflare, chcąc wyśrubować wydajność, starają się precyzyjnie alokować pamięć. Pamięć na cechy była prealokowana na 200 pozycji. Sami przyznali, że 200 to i tak znacznie więcej niż standardowe 60, więc mieli bufor (trzy razy tyle). Okazało się, że to nie wystarczyło.
+Metoda unwrap(): W kodzie, który obiegł internet, znajdował się fragment wczytujący konfigurację, który na końcu używał metody unwrap().
+Czym jest unwrap()? W Raście nie ma null. Zamiast tego często używa się typu Result<T, Error>, który może zawierać albo poprawny wynik (T), albo błąd (Error). Metoda unwrap() działa na zasadzie "daj mi wynik albo spanikuj" (get or panic). Jeśli Result zawiera błąd, unwrap() powoduje panikę, co w uproszczeniu można przetłumaczyć na twardy wyjątek, który wywala całą aplikację.
+Dla Dotnetowców: To trochę jakby wywołanie await na Task<T> zwracało T, ale unwrap() dodatkowo powoduje awarię, jeśli operacja się nie powiodła.
+Przebieg awarii w kodzie:
+Funkcja append_with_names, próbując dodać ponad 200 cech do prealokowanego bufora, zwróciła obiekt błędu (Error).
+Metoda unwrap() została wywołana na tym obiekcie błędu.
+Nastąpiła panika, co widać w logach: FL2 (Frontline 2) worker panicked at 'called Result::unwrap()on anErr value'.
+-->
 
 ---
 
@@ -283,37 +289,19 @@ flowchart LR
 
 ---
 
-# 📊 Impact on Services
-
-| Service | Impact |
-|---------|--------|
-| 🌐 **CDN / Security** | HTTP 5xx for all clients |
-| 🔐 **Turnstile** | Complete failure |
-| 📦 **Workers KV** | Increased error rate |
-| 📊 **Dashboard** | Unable to log in |
-| 🔑 **Access** | Authentication errors |
-| 📧 **Email Security** | Reduced spam detection |
-
----
-
-# 🔧 FL vs FL2 - Different Impact
+# ⏰ Outage Timeline
 
 ```mermaid
-flowchart TB
-    subgraph FL2 [New FL2 Proxy]
-        A1[Request] --> B1{Bot Module}
-        B1 -->|PANIC!| C1[❌ HTTP 500]
-    end
-    
-    subgraph FL [Old FL Proxy]
-        A2[Request] --> B2{Bot Module}
-        B2 -->|Error| C2[Bot Score = 0]
-        C2 --> D2[⚠️ False positives]
-    end
+timeline
+    title November 18, 2025 Cloudflare Outage (UTC)
+    11_05 : Permission change deployed in ClickHouse
+    11_20 : 🔴 Start of issues - 5xx errors
+    11_28 : Deployment reaches production
+    13_05 : Workaround for Workers KV and Access
+    14_24 : Root cause identified - bot management file
+    14_30 : 🟢 Correct file deployed
+    17_06 : 🟢 Full normalization
 ```
-
-**FL2**: Hard 500 errors  
-**FL**: Everything = "not-bot" → blocking rule issues
 
 ---
 
