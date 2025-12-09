@@ -159,21 +159,7 @@ Proces: Zestaw cech jest pakowany do pliku, który jest generowany co 5 minut. P
 
 ---
 
-# ⏰ Outage Timeline
 
-```mermaid
-timeline
-    title November 18, 2025 Cloudflare Outage (UTC)
-    11_05 : Permission change deployed in ClickHouse
-    11_20 : 🔴 Start of issues - 5xx errors
-    11_28 : Deployment reaches production
-    13_05 : Workaround for Workers KV and Access
-    14_24 : Root cause identified - bot management file
-    14_30 : 🟢 Correct file deployed
-    17_06 : 🟢 Full normalization
-```
-
----
 
 
 # 🗃️ ClickHouse Architecture
@@ -234,6 +220,22 @@ fn load_features(config: &Config) -> Features {
 - **Expected:** ~60 features  
 - **Received:** >200 features (duplicates)
 - **Result:** `Result::unwrap()` on `Err` → **PANIC** 💀
+
+---
+
+# ⏰ Outage Timeline
+
+```mermaid
+timeline
+    title November 18, 2025 Cloudflare Outage (UTC)
+    11_05 : Permission change deployed in ClickHouse
+    11_20 : 🔴 Start of issues - 5xx errors
+    11_28 : Deployment reaches production
+    13_05 : Workaround for Workers KV and Access
+    14_24 : Root cause identified - bot management file
+    14_30 : 🟢 Correct file deployed
+    17_06 : 🟢 Full normalization
+```
 
 ---
 
