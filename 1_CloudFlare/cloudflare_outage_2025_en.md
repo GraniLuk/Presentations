@@ -137,7 +137,7 @@ flowchart TB
     D -->|Low score| E[✅ Allow]
     D -->|High score| F[❌ Block]
     
-    G[📄 Feature file] -->|60 features| B
+    G[📄 Features] -->|60 features| B
     H[🧠 ML Model] --> B
 ```
 
@@ -158,9 +158,6 @@ Proces: Zestaw cech jest pakowany do pliku, który jest generowany co 5 minut. P
 -->
 
 ---
-
-
-
 
 # 🗃️ ClickHouse Architecture
 
