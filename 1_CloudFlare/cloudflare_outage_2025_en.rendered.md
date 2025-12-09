@@ -109,7 +109,7 @@ So like everyone else, I got hit by the CloudFlare outage at November 18th. Afte
 |----------|-----------|
 | 🏢 Technology | Mozilla, Microsoft Azure, Office 365, IBM |
 | 🛒 E-commerce | Nike, H&M, Shopify |
-| 💬 Social | Reddit, Digital Ocean |
+| 💬 Social | Reddit, Twitter |
 
 ---
 
