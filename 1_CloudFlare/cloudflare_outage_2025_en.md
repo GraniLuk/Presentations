@@ -343,6 +343,53 @@ The part that's interesting to me is there was no fallback. No "hey something's 
 
 ---
 
+## Preventing Deployment Spread: Circuit Breakers and Rollout Strategies
+
+### Why did the update keep spreading?
+
+```mermaid
+flowchart TD
+    A[🚀 Deployment Starts] --> B[Node 1: Deploy]
+    B --> C{Health Check?}
+    C -->|No| D[Node 2: Deploy]
+    D --> E{Health Check?}
+    E -->|No| F[Node 3: Deploy]
+    F --> G[💥 Errors Spread]
+```
+
+**Automated rollouts without real-time monitoring** → Errors propagate unchecked
+
+---
+
+### Circuit Breaker Pattern for Deployments
+
+```mermaid
+flowchart TD
+    A[🚀 Start Rollout] --> B[Deploy to 10% nodes]
+    B --> C[Monitor Metrics]
+    C --> D{Error Rate > Threshold?}
+    D -->|Yes| E[🛑 STOP Rollout]
+    D -->|No| F[Deploy to next 10%]
+    F --> G[Repeat until 100%]
+```
+
+**Stop propagation if errors exceed safe limits**
+
+---
+
+### Different Strategies for Different Changes
+
+| Change Type | Strategy | Speed vs Safety |
+|-------------|----------|-----------------|
+| 🔒 **Security Patches** | Fast rollout | ⚡ Speed (counter attacks) |
+| 🏗️ **Infrastructure Changes** | Canary / Blue-Green | 🛡️ Safety (rollback ready) |
+
+**Balance speed for security with caution for infra**
+
+---
+
+---
+
 # 🏢 Organizational Problem
 
 ```mermaid
