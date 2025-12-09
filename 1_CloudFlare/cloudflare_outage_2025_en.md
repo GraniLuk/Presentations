@@ -117,7 +117,7 @@ flowchart LR
 |----------|-----------|
 | 🏢 Technology | Mozilla, Microsoft Azure, Office 365, IBM |
 | 🛒 E-commerce | Nike, H&M, Shopify |
-| 💬 Social | Reddit, Digital Ocean |
+| 💬 Social | Reddit, Twitter |
 
 ---
 
