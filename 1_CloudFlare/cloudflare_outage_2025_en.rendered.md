@@ -265,9 +265,40 @@ The part that's interesting to me is there was no fallback. No "hey something's 
 
 ---
 
-# 🏢 Organizational Problem
+## Preventing Deployment Spread: Circuit Breakers and Rollout Strategies
+
+### Why did the update keep spreading?
 
 ![w:auto h:300](assets/mermaid/mermaid-8.svg)
+
+**Automated rollouts without real-time monitoring** → Errors propagate unchecked
+
+---
+
+### Circuit Breaker Pattern for Deployments
+
+![w:auto h:300](assets/mermaid/mermaid-9.svg)
+
+**Stop propagation if errors exceed safe limits**
+
+---
+
+### Different Strategies for Different Changes
+
+| Change Type | Strategy | Speed vs Safety |
+|-------------|----------|-----------------|
+| 🔒 **Security Patches** | Fast rollout | ⚡ Speed (counter attacks) |
+| 🏗️ **Infrastructure Changes** | Canary / Blue-Green | 🛡️ Safety (rollback ready) |
+
+**Balance speed for security with caution for infra**
+
+---
+
+---
+
+# 🏢 Organizational Problem
+
+![w:auto h:300](assets/mermaid/mermaid-10.svg)
 
 ## 🎯 Key problem:
 **Change in one place → explosion in another**
@@ -278,7 +309,7 @@ The part that's interesting to me is there was no fallback. No "hey something's 
 
 ## Possible explanation:
 
-![w:auto h:300](assets/mermaid/mermaid-9.svg)
+![w:auto h:300](assets/mermaid/mermaid-11.svg)
 
 **Production scale ≠ Test scale**
 
@@ -308,7 +339,7 @@ The part that's interesting to me is there was no fallback. No "hey something's 
 
 # 📈 Outage Visualization
 
-![w:auto h:300](assets/mermaid/mermaid-10.svg)
+![w:auto h:300](assets/mermaid/mermaid-12.svg)
 
 **Fluctuations** = different nodes with different feature file versions
 
@@ -332,7 +363,7 @@ The part that's interesting to me is there was no fallback. No "hey something's 
 
 # 🎯 Summary
 
-![w:auto h:300](assets/mermaid/mermaid-11.svg)
+![w:auto h:300](assets/mermaid/mermaid-13.svg)
 
 ---
 
