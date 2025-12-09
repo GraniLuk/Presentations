@@ -120,6 +120,10 @@ flowchart LR
 | 🛒 E-commerce | Nike, H&M, Shopify |
 | 💬 Social | Reddit, Twitter |
 
+<!--
+Zapytaj jak ludzie doświadczyli awarii
+-->
+
 ---
 
 # ⏰ Outage Timeline
