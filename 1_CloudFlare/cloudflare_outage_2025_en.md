@@ -164,18 +164,13 @@ Proces: Zestaw cech jest pakowany do pliku, który jest generowany co 5 minut. P
 ## Databases and shards
 
 ```mermaid
-flowchart TB
-    subgraph Before outage
-        A1[SQL Query] --> B1[Database 'default']
-        B1 --> C1[~60 features]
-    end
-    
-    subgraph After permission change
-        A2[SQL Query] --> B2[Database 'default']
-        B2 --> C2[Aggregated features]
-        A2 --> D2[Database 'R0']
-        D2 --> E2[Features from shards]
-        C2 & E2 --> F2[❌ >200 features!]
+flowchart LR
+    subgraph ClickHouse Architecture
+        S1[Shard 1] --> R0[Database 'R0'<br/>(physical data)]
+        S2[Shard 2] --> R0
+        SN[Shard N] --> R0
+        R0 --> Default[Database 'default'<br/>(aggregated view)]
+        Default --> Q[SQL Query]
     end
 ```
 
