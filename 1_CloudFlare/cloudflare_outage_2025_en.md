@@ -179,6 +179,16 @@ flowchart TB
     end
 ```
 
+<!--
+Infrastruktura Bazy Danych: ClickHouse
+Cała infrastruktura, gdzie przetrzymywane były te cechy, była spięta poprzez ClickHouse, rozproszoną bazę danych.
+
+Struktura: Mieliśmy bazę, która posiadała listę shardów. Pod spodem mieliśmy shardy w konkretnych bazach.
+Baza default: Główny węzeł, który zawierał listę wszystkich shardów.
+Baza R0: Zawierała konkretne shardy.
+Działanie: Dla użytkownika jest to transparentne. Odpytuje jedną bazę, a pod spodem dzieje się cała magia z wyszukiwaniem, łączeniem rezultatów i zwracaniem ich jako projekcji (widoku).
+-->
+
 ---
 
 # 🔍 Query without database discriminator
