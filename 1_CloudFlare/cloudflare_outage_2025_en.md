@@ -62,7 +62,7 @@ style: |
 # 🔥 Cloudflare Outage 2025
 ## How One File Took Down 16% of the Internet
 
-**Geeks Club1**
+**Geeks Club**
 
 📅 December 10, 2025
 
