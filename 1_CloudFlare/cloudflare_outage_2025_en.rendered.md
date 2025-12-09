@@ -31,6 +31,10 @@ style: |
     max-height: 350px;
     width: auto;
   }
+  .large-diagram .mermaid svg {
+    max-height: 500px;
+    width: auto;
+  }
   /* Rendered mermaid images from pipeline */
   section img[alt="mermaid diagram"] {
     max-height: 350px;
@@ -45,6 +49,9 @@ style: |
     border-left: 4px solid #f77f00;
     background-color: #2d2d44;
     padding: 1em;
+  }
+  .center {
+    text-align: center;
   }
   table {
     font-size: 0.8em;
@@ -302,9 +309,13 @@ The part that's interesting to me is there was no fallback. No "hey something's 
 
 ---
 
+<!-- _class: center -->
+
 ## Why did the update keep spreading?
 
+<div class="large-diagram">
 ![w:auto h:300](assets/mermaid/mermaid-7.svg)
+</div>
 
 <!--**Automated rollouts without real-time monitoring** → Errors propagate unchecked-->
 
