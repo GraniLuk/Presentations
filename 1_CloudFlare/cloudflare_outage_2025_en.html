@@ -69,15 +69,7 @@
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="6" data-paginate="true" data-background-color="#1a1a2e" data-color="#eaeaea" data-theme="default" data-style="h2 { font-size: 0.8em; } blockquote { font-size: 0.7em; }" lang="C" data-marpit-pagination="6" style="--paginate:true;--background-color:#1a1a2e;--color:#eaeaea;--theme:default;--style:h2 { font-size: 0.8em; } blockquote { font-size: 0.7em; };color:#eaeaea;background-color:#1a1a2e;background-image:none;" data-marpit-pagination-total="28">
 <h1 id="%F0%9F%97%83%EF%B8%8F-clickhouse-architecture"><img class="emoji" draggable="false" alt="🗃️" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f5c3.svg" data-marp-twemoji=""/> ClickHouse Architecture</h1>
 <h2 id="databases-and-shards">Databases and shards</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-mermaid">flowchart LR
-    subgraph ClickHouse Architecture
-        S1[Shard 1] --&gt; R0[Database 'R0'&lt;br/&gt;(physical data)]
-        S2[Shard 2] --&gt; R0
-        SN[Shard N] --&gt; R0
-        R0 --&gt; Default[Database 'default'&lt;br/&gt;(aggregated view)]
-        Default --&gt; Q[SQL Query]
-    end
-</code></pre>
+<p><img src="assets/mermaid/mermaid-3.svg" alt="" style="width:auto;height:300px;" /></p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="7" data-paginate="true" data-background-color="#1a1a2e" data-color="#eaeaea" data-theme="default" data-style="h2 { font-size: 0.8em; } blockquote { font-size: 0.7em; }" lang="C" data-marpit-pagination="7" style="--paginate:true;--background-color:#1a1a2e;--color:#eaeaea;--theme:default;--style:h2 { font-size: 0.8em; } blockquote { font-size: 0.7em; };color:#eaeaea;background-color:#1a1a2e;background-image:none;" data-marpit-pagination-total="28">
 <h1 id="%F0%9F%94%8D-query-without-database-discriminator"><img class="emoji" draggable="false" alt="🔍" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f50d.svg" data-marp-twemoji=""/> Query without database discriminator</h1>
