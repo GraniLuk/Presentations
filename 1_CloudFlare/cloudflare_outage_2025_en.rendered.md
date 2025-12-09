@@ -112,29 +112,43 @@ So like everyone else, I got hit by the CloudFlare outage at November 18th. Afte
 | 🛒 E-commerce | Nike, H&M, Shopify |
 | 💬 Social | Reddit, Twitter |
 
----
-
-# ⏰ Outage Timeline
-
-![w:auto h:300](assets/mermaid/mermaid-2.svg)
-
+<!--
+Zapytaj jak ludzie doświadczyli awarii
+-->
 ---
 
 # 🤖 Bot Management - Source of the Problem
 
 ## How does bot scoring work?
 
-![w:auto h:300](assets/mermaid/mermaid-3.svg)
+![w:auto h:300](assets/mermaid/mermaid-2.svg)
 
 **Bot Score**: 0-99 (higher = greater bot probability)
 
+<!--
+Problem u Źródła: Funkcja Wykrywania Botów
+Problem dotyczy feature'a związanego z wykrywaniem różnych botów, które wchodzą do infrastruktury przez Cloudflare. System analizuje ruch i decyduje, czy go przepuścić, czy zablokować.
+
+Bot Scoring: W dużym uproszczeniu, jest to ocena od 0 do 99, która określa prawdopodobieństwo, czy request pochodzi od człowieka, czy od bota. Im wyższy wynik, tym większe prawdopodobieństwo, że to bot.
+Technologia: Usługa ta opiera się na uczeniu maszynowym i analizuje zbiór cech (features) danego requestu.
+Architektura i Konfiguracja
+Lista cech nie jest sztywna. Jest na bieżąco aktualizowana na podstawie całego ruchu, który widzi Cloudflare, i propagowana na wszystkie instancje decydujące o przepuszczaniu ruchu.
+
+Liczba cech: W momencie awarii było ich około 60.
+Założony limit: Infrastruktura była przygotowana na maksymalnie 200 cech do analizy.
+Proces: Zestaw cech jest pakowany do pliku, który jest generowany co 5 minut. Plik ten jest rozpropagowywany do modułu Bot Managementu, który na jego podstawie dokonuje asercji ML-owej.
+-->
+
 ---
+
+
+
 
 # 🗃️ ClickHouse Architecture
 
 ## Databases and shards
 
-![w:auto h:300](assets/mermaid/mermaid-4.svg)
+![w:auto h:300](assets/mermaid/mermaid-3.svg)
 
 ---
 
@@ -174,6 +188,12 @@ fn load_features(config: &Config) -> Features {
 - **Expected:** ~60 features  
 - **Received:** >200 features (duplicates)
 - **Result:** `Result::unwrap()` on `Err` → **PANIC** 💀
+
+---
+
+# ⏰ Outage Timeline
+
+![w:auto h:300](assets/mermaid/mermaid-4.svg)
 
 ---
 
