@@ -375,8 +375,6 @@ flowchart TD
     F --> G[💥 Errors Spread]
 ```
 
-**Automated rollouts without real-time monitoring** → Errors propagate unchecked
-
 ---
 
 ### Circuit Breaker Pattern for Deployments
