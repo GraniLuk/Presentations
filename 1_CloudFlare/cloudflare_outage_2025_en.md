@@ -123,23 +123,6 @@ flowchart LR
 <!--
 Zapytaj jak ludzie doświadczyli awarii
 -->
-
----
-
-# ⏰ Outage Timeline
-
-```mermaid
-timeline
-    title November 18, 2025 Cloudflare Outage (UTC)
-    11_05 : Permission change deployed in ClickHouse
-    11_20 : 🔴 Start of issues - 5xx errors
-    11_28 : Deployment reaches production
-    13_05 : Workaround for Workers KV and Access
-    14_24 : Root cause identified - bot management file
-    14_30 : 🟢 Correct file deployed
-    17_06 : 🟢 Full normalization
-```
-
 ---
 
 # 🤖 Bot Management - Source of the Problem
@@ -161,6 +144,23 @@ flowchart TB
 **Bot Score**: 0-99 (higher = greater bot probability)
 
 ---
+
+# ⏰ Outage Timeline
+
+```mermaid
+timeline
+    title November 18, 2025 Cloudflare Outage (UTC)
+    11_05 : Permission change deployed in ClickHouse
+    11_20 : 🔴 Start of issues - 5xx errors
+    11_28 : Deployment reaches production
+    13_05 : Workaround for Workers KV and Access
+    14_24 : Root cause identified - bot management file
+    14_30 : 🟢 Correct file deployed
+    17_06 : 🟢 Full normalization
+```
+
+---
+
 
 # 🗃️ ClickHouse Architecture
 
