@@ -62,7 +62,7 @@ style: |
 # 🔥 Cloudflare Outage 2025
 ## How One File Took Down 16% of the Internet
 
-**Geeks Club1**
+**Geeks Club**
 
 📅 December 10, 2025
 
@@ -83,7 +83,7 @@ style: |
 
 **Middleware between the client and your application**
 
-<img src="assets/mermaid/mermaid-1.svg" alt="mermaid diagram" style="max-height: 300px; width: auto; display: block; margin: 0 auto;">
+![w:auto h:300](assets/mermaid/mermaid-1.svg)
 
 ---
 
@@ -104,7 +104,7 @@ style: |
 
 # ⏰ Outage Timeline
 
-<img src="assets/mermaid/mermaid-2.svg" alt="mermaid diagram" style="max-height: 300px; width: auto; display: block; margin: 0 auto;">
+![w:auto h:300](assets/mermaid/mermaid-2.svg)
 
 ---
 
@@ -112,7 +112,7 @@ style: |
 
 ## How does bot scoring work?
 
-<img src="assets/mermaid/mermaid-3.svg" alt="mermaid diagram" style="max-height: 300px; width: auto; display: block; margin: 0 auto;">
+![w:auto h:300](assets/mermaid/mermaid-3.svg)
 
 **Bot Score**: 0-99 (higher = greater bot probability)
 
@@ -122,7 +122,7 @@ style: |
 
 ## Databases and shards
 
-<img src="assets/mermaid/mermaid-4.svg" alt="mermaid diagram" style="max-height: 300px; width: auto; display: block; margin: 0 auto;">
+![w:auto h:300](assets/mermaid/mermaid-4.svg)
 
 ---
 
@@ -167,7 +167,7 @@ fn load_features(config: &Config) -> Features {
 
 # 💥 Outage Mechanism
 
-<img src="assets/mermaid/mermaid-5.svg" alt="mermaid diagram" style="max-height: 300px; width: auto; display: block; margin: 0 auto;">
+![w:auto h:300](assets/mermaid/mermaid-5.svg)
 
 ---
 
@@ -175,7 +175,7 @@ fn load_features(config: &Config) -> Features {
 
 ## Why did they think it was a DDoS attack?
 
-<img src="assets/mermaid/mermaid-6.svg" alt="mermaid diagram" style="max-height: 300px; width: auto; display: block; margin: 0 auto;">
+![w:auto h:300](assets/mermaid/mermaid-6.svg)
 
 ### Unusual behavior:
 - Fluctuations: old nodes had correct cache
@@ -198,7 +198,7 @@ fn load_features(config: &Config) -> Features {
 
 # 🔧 FL vs FL2 - Different Impact
 
-<img src="assets/mermaid/mermaid-7.svg" alt="mermaid diagram" style="max-height: 300px; width: auto; display: block; margin: 0 auto;">
+![w:auto h:300](assets/mermaid/mermaid-7.svg)
 
 **FL2**: Hard 500 errors  
 **FL**: Everything = "not-bot" → blocking rule issues
@@ -248,7 +248,7 @@ if features.len() > 200 {
 
 # 🏢 Organizational Problem
 
-<img src="assets/mermaid/mermaid-8.svg" alt="mermaid diagram" style="max-height: 300px; width: auto; display: block; margin: 0 auto;">
+![w:auto h:300](assets/mermaid/mermaid-8.svg)
 
 ## 🎯 Key problem:
 **Change in one place → explosion in another**
@@ -259,7 +259,7 @@ if features.len() > 200 {
 
 ## Possible explanation:
 
-<img src="assets/mermaid/mermaid-9.svg" alt="mermaid diagram" style="max-height: 300px; width: auto; display: block; margin: 0 auto;">
+![w:auto h:300](assets/mermaid/mermaid-9.svg)
 
 **Production scale ≠ Test scale**
 
@@ -289,7 +289,7 @@ if features.len() > 200 {
 
 # 📈 Outage Visualization
 
-<img src="assets/mermaid/mermaid-10.svg" alt="mermaid diagram" style="max-height: 300px; width: auto; display: block; margin: 0 auto;">
+![w:auto h:300](assets/mermaid/mermaid-10.svg)
 
 **Fluctuations** = different nodes with different feature file versions
 
@@ -313,7 +313,7 @@ if features.len() > 200 {
 
 # 🎯 Summary
 
-<img src="assets/mermaid/mermaid-11.svg" alt="mermaid diagram" style="max-height: 300px; width: auto; display: block; margin: 0 auto;">
+![w:auto h:300](assets/mermaid/mermaid-11.svg)
 
 ---
 
