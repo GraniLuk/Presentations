@@ -48,6 +48,7 @@ style: |
   }
   table {
     font-size: 0.8em;
+    color: #1a1a2e;
   }
   th {
     background-color: #f77f00;
