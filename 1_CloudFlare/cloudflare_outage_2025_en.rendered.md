@@ -145,16 +145,7 @@ Proces: Zestaw cech jest pakowany do pliku, który jest generowany co 5 minut. P
 
 ## Databases and shards
 
-```mermaid
-flowchart LR
-    subgraph ClickHouse Architecture
-        S1[Shard 1] --> R0[Database 'R0'<br/>(physical data)]
-        S2[Shard 2] --> R0
-        SN[Shard N] --> R0
-        R0 --> Default[Database 'default'<br/>(aggregated view)]
-        Default --> Q[SQL Query]
-    end
-```
+![w:auto h:300](assets/mermaid/mermaid-3.svg)
 
 <!--
 Infrastruktura Bazy Danych: ClickHouse
