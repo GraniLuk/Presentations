@@ -65,6 +65,10 @@ style: |
   }
 ---
 
+<style>
+  table, table th, table td { color: #000000 !important; }
+</style>
+
 # 🔥 Cloudflare Outage 2025
 ## How One File Took Down 16% of the Internet
 
