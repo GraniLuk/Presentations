@@ -84,7 +84,7 @@ So like everyone else, I got hit by the CloudFlare outage at November 18th. Afte
 # 📋 Agenda
 
 1. 🌐 **Why is Cloudflare important?**
-2. 💥 **What happened?** - Outage Timeline
+2. 💥 **What happened?** - Outage description
 3. 🔧 **Technical Analysis** - ClickHouse, Rust, unwrap()
 4. 🎭 **Confusing Factors** - Why they thought it was a DDoS attack
 5. 📝 **Conclusions and Remedial Actions**
@@ -363,9 +363,7 @@ The part that's interesting to me is there was no fallback. No "hey something's 
 
 ---
 
-## Preventing Deployment Spread: Circuit Breakers and Rollout Strategies
-
-### Why did the update keep spreading?
+## Why did the update keep spreading?
 
 ```mermaid
 flowchart TD
@@ -405,8 +403,6 @@ flowchart TD
 | 🏗️ **Infrastructure Changes** | Canary / Blue-Green | 🛡️ Safety (rollback ready) |
 
 **Balance speed for security with caution for infra**
-
----
 
 ---
 
@@ -474,20 +470,6 @@ flowchart TB
 ## 4️⃣ Production-scale Testing
 
 > Pre-prod must reflect reality
-
----
-
-# 📈 Outage Visualization
-
-```mermaid
-xychart-beta
-  title "HTTP 5xx Errors During Incident"
-  x-axis ["11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","17:00"]
-  y-axis "Error Volume" 0 --> 100
-  line [5, 85, 70, 90, 60, 50, 45, 20, 15, 10, 8, 5]
-```
-
-**Fluctuations** = different nodes with different feature file versions
 
 ---
 
