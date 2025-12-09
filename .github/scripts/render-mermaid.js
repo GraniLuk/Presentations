@@ -50,9 +50,20 @@ let rendered = content.replace(mermaidRegex, (m, code) => {
     }
 
     const isWindows = process.platform === 'win32';
-    const res = spawnSync(isWindows ? 'cmd' : 'npx',
-        isWindows ? ['/c', 'npx', '-y', '@mermaid-js/mermaid-cli', ...mmcdArgs] : ['-y', '@mermaid-js/mermaid-cli', ...mmcdArgs],
-        { encoding: 'utf8' });
+
+    // Try to use globally installed mmdc first (for CI where it's installed globally)
+    // Fall back to npx for local development
+    let res;
+    if (isWindows) {
+        res = spawnSync('cmd', ['/c', 'npx', '-y', '@mermaid-js/mermaid-cli', ...mmcdArgs], { encoding: 'utf8' });
+    } else {
+        // Try global mmdc first (faster in CI)
+        res = spawnSync('mmdc', mmcdArgs, { encoding: 'utf8' });
+        if (res.error && res.error.code === 'ENOENT') {
+            // Fall back to npx if mmdc not found globally
+            res = spawnSync('npx', ['-y', '@mermaid-js/mermaid-cli', ...mmcdArgs], { encoding: 'utf8' });
+        }
+    }
     if (res.error) {
         console.error('Failed to run mmdc:', res.error);
         return m; // leave original block
@@ -68,9 +79,10 @@ let rendered = content.replace(mermaidRegex, (m, code) => {
     // remove tmp file
     try { fs.unlinkSync(tmpFile); } catch (e) { console.error(`Failed to delete temporary file ${tmpFile}:`, e); }
 
-    // return HTML img tag with explicit dimensions for proper sizing in Marp PDF/HTML
+    // Use Marp's native image sizing syntax: ![w:WIDTH h:HEIGHT](path)
+    // This is properly respected by Marp in both HTML and PDF output
     const relPath = path.relative(path.dirname(output), outPath).replace(/\\/g, '/');
-    return `<img src="${relPath}" alt="mermaid diagram" style="max-height: ${height}px; width: auto; display: block; margin: 0 auto;">`;
+    return `![w:auto h:${height}](${relPath})`;
 });
 
 fs.writeFileSync(output, rendered, 'utf8');
