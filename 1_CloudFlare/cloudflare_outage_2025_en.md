@@ -143,6 +143,20 @@ flowchart TB
 
 **Bot Score**: 0-99 (higher = greater bot probability)
 
+<!--
+Problem u Źródła: Funkcja Wykrywania Botów
+Problem dotyczy feature'a związanego z wykrywaniem różnych botów, które wchodzą do infrastruktury przez Cloudflare. System analizuje ruch i decyduje, czy go przepuścić, czy zablokować.
+
+Bot Scoring: W dużym uproszczeniu, jest to ocena od 0 do 99, która określa prawdopodobieństwo, czy request pochodzi od człowieka, czy od bota. Im wyższy wynik, tym większe prawdopodobieństwo, że to bot.
+Technologia: Usługa ta opiera się na uczeniu maszynowym i analizuje zbiór cech (features) danego requestu.
+Architektura i Konfiguracja
+Lista cech nie jest sztywna. Jest na bieżąco aktualizowana na podstawie całego ruchu, który widzi Cloudflare, i propagowana na wszystkie instancje decydujące o przepuszczaniu ruchu.
+
+Liczba cech: W momencie awarii było ich około 60.
+Założony limit: Infrastruktura była przygotowana na maksymalnie 200 cech do analizy.
+Proces: Zestaw cech jest pakowany do pliku, który jest generowany co 5 minut. Plik ten jest rozpropagowywany do modułu Bot Managementu, który na jego podstawie dokonuje asercji ML-owej.
+-->
+
 ---
 
 # ⏰ Outage Timeline
