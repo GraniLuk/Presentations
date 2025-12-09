@@ -166,10 +166,10 @@ Proces: Zestaw cech jest pakowany do pliku, który jest generowany co 5 minut. P
 ```mermaid
 flowchart LR
     subgraph ClickHouse Architecture
-        S1[Shard 1] --> R0[Database 'R0'<br/>(physical data)]
+        S1[Shard 1] --> R0["Database 'R0'<br/>(physical data)"]
         S2[Shard 2] --> R0
         SN[Shard N] --> R0
-        R0 --> Default[Database 'default'<br/>(aggregated view)]
+        R0 --> Default["Database 'default'<br/>(aggregated view)"]
         Default --> Q[SQL Query]
     end
 ```
