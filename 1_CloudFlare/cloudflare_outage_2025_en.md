@@ -67,6 +67,9 @@ style: |
 
 📅 December 10, 2025
 
+<!---
+So like everyone else, I got hit by the CloudFlare outage at November 18th. After reading their post morten (which was honestly really detailed and transparent - mad respect for the team working hard to keep us all safe), I wanted to share some thoughts what can we learn from this mistake.
+-->
 ---
 
 # 📋 Agenda
@@ -78,9 +81,6 @@ style: |
 5. 📝 **Conclusions and Remedial Actions**
 6. 💭 **Comment** - What do we learn from this?
 
-<!---
-So like everyone else, I got hit by the CloudFlare outage at November 18th. After reading their post morten (which was honestly really detailed and transparent - mad respect for the team working hard to keep us all safe), I wanted to share some thoughts what can we learn from this mistake.
--->
 ---
 
 # 🌐 What is Cloudflare?
