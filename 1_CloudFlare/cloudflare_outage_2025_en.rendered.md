@@ -306,7 +306,7 @@ The part that's interesting to me is there was no fallback. No "hey something's 
 
 ![w:auto h:300](assets/mermaid/mermaid-7.svg)
 
-**Automated rollouts without real-time monitoring** → Errors propagate unchecked
+<!--**Automated rollouts without real-time monitoring** → Errors propagate unchecked-->
 
 ---
 
