@@ -84,7 +84,7 @@ So like everyone else, I got hit by the CloudFlare outage at November 18th. Afte
 # 📋 Agenda
 
 1. 🌐 **Why is Cloudflare important?**
-2. 💥 **What happened?** - Outage Timeline
+2. 💥 **What happened?** - Outage description
 3. 🔧 **Technical Analysis** - ClickHouse, Rust, unwrap()
 4. 🎭 **Confusing Factors** - Why they thought it was a DDoS attack
 5. 📝 **Conclusions and Remedial Actions**
@@ -302,9 +302,7 @@ The part that's interesting to me is there was no fallback. No "hey something's 
 
 ---
 
-## Preventing Deployment Spread: Circuit Breakers and Rollout Strategies
-
-### Why did the update keep spreading?
+## Why did the update keep spreading?
 
 ![w:auto h:300](assets/mermaid/mermaid-7.svg)
 
@@ -328,8 +326,6 @@ The part that's interesting to me is there was no fallback. No "hey something's 
 | 🏗️ **Infrastructure Changes** | Canary / Blue-Green | 🛡️ Safety (rollback ready) |
 
 **Balance speed for security with caution for infra**
-
----
 
 ---
 
@@ -374,14 +370,6 @@ The part that's interesting to me is there was no fallback. No "hey something's 
 
 ---
 
-# 📈 Outage Visualization
-
-![w:auto h:300](assets/mermaid/mermaid-11.svg)
-
-**Fluctuations** = different nodes with different feature file versions
-
----
-
 # 🤔 For Discussion
 
 ## Questions for the team:
@@ -400,7 +388,7 @@ The part that's interesting to me is there was no fallback. No "hey something's 
 
 # 🎯 Summary
 
-![w:auto h:300](assets/mermaid/mermaid-12.svg)
+![w:auto h:300](assets/mermaid/mermaid-11.svg)
 
 ---
 
