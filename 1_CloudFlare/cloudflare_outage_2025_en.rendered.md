@@ -54,7 +54,12 @@ style: |
     background-color: #f77f00;
     color: #1a1a2e;
   }
-  /* Ensure table text is readable when table background is white */
+  /* Force table header and cells to use black text regardless of section color.
+     Include selectors that match Marp's generated SVG/foreignObject structure so
+     the rule applies inside the slide SVG (where section gets an inline color). */
+  svg foreignObject section table th,
+  svg foreignObject section table td,
+  section table th,
   section table td {
     color: #000000 !important;
   }
