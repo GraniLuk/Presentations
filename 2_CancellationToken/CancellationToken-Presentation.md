@@ -44,11 +44,18 @@ style: |
   .fa-twitter { color: aqua; }
 ---
 
+
+<style>
+  table, table th, table td { color: #000000 !important; }
+</style>
+
 <!-- _class: lead -->
 # ⏱️ Cancellation Tokens in .NET
 ## Deep Dive with Stephen Toub's Insights
 
-🖥️ Tech Meeting Presentation
+**🖥️ Geeks Club**
+
+📅 December 10, 2025
 
 ---
 
