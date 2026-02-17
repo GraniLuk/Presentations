@@ -303,7 +303,7 @@ Target: **15–25 slides total**. Each slide should be digestible in 1–2 minut
 
 ## Building locally
 
-See [docs/marp-local-development.md](docs/marp-local-development.md) for setup.
+See [docs/marp-local-development.md](../../../docs/marp-local-development.md) for setup.
 
 Quick commands:
 ```bash
