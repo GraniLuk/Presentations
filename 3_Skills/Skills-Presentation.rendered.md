@@ -114,7 +114,6 @@ Skills transform **general-purpose agents** into **specialists**.
 |---------|---------|
 | 🧠 Skill | An onboarding guide for a new team member |
 | 📝 Prompt | A one-off sticky note with instructions |
-| 🔧 Tool | A specific capability (e.g., run code, search) |
 
 Skills differ from prompts — they **load on-demand** and eliminate the need to repeatedly provide the same guidance.
 
@@ -137,14 +136,14 @@ Unlike prompts which are conversation-level, Skills persist and are reusable.
 ### Without Skills:
 ```
 You: "Remember to always filter test accounts, use UTC timestamps,
-     and follow our naming convention for BigQuery tables..."
+     and follow our naming convention for SQLServer tables..."
      (... every single conversation)
 ```
 
 ### With Skills:
 ```
 You: "Analyze Q4 revenue"
-Agent: (automatically loads BigQuery Skill with all your conventions)
+Agent: (automatically loads SQLServer Skill with all your conventions)
 ```
 
 <!--
@@ -343,6 +342,13 @@ Important caveat: Skills don't sync between platforms — you need to set them u
 ![w:auto h:300](assets/mermaid/mermaid-4.svg)
 
 ### Step 1: Complete a task with normal prompting first
+
+### Step 2: Identify the reusable pattern
+
+### Step 3: Write SKILL.md
+
+<!--
+### Step 1: Complete a task with normal prompting first
 Notice what context you repeatedly provide.
 
 ### Step 2: Identify the reusable pattern
@@ -350,8 +356,6 @@ Table schemas, naming conventions, filtering rules, query patterns.
 
 ### Step 3: Write SKILL.md
 Package the knowledge you had to provide manually.
-
-<!--
 The most effective development process involves the agent itself!
 Work through a problem first, then extract the reusable pattern.
 Don't start by trying to imagine what the Skill needs — start by doing the work.
@@ -390,42 +394,6 @@ Always use gerund form for consistency.
 The description is CRITICAL — it's how the agent discovers which Skill to load.
 Write in third person. Be specific. Include trigger keywords.
 Think of description as the "search index" — if your keywords don't match the task, the Skill won't activate.
--->
-
----
-
-# 📦 Pattern: Progressive Disclosure
-
-### Pattern 1 — High-level guide with references:
-```
-SKILL.md     → Quick start + links to details
-FORMS.md     → Form-filling guide (loaded as needed)
-REFERENCE.md → API reference (loaded as needed)
-```
-
-### Pattern 2 — Domain-specific organization:
-```
-bigquery-skill/
-├── SKILL.md (overview and navigation)
-└── reference/
-    ├── finance.md   (revenue, billing metrics)
-    ├── sales.md     (opportunities, pipeline)
-    └── product.md   (API usage, features)
-```
-
-### Pattern 3 — Conditional details:
-```
-SKILL.md     → Basic instructions
-REDLINING.md → Only when tracked changes needed
-OOXML.md     → Only when deep XML editing needed
-```
-
-<!--
-Progressive disclosure is the core design pattern for Skills.
-Pattern 1 is good for Skills with a clear quick start but detailed features.
-Pattern 2 is perfect when different tasks need different domain knowledge.
-Pattern 3 works when most requests are simple but some need advanced features.
-In all cases — only what's needed enters the context window.
 -->
 
 ---
