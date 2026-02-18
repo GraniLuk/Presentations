@@ -131,7 +131,6 @@ Unlike prompts which are conversation-level, Skills persist and are reusable.
 
 - 🎓 **Specialize the agent** — Tailor capabilities for domain-specific tasks
 - 🔄 **Reduce repetition** — Create once, use automatically across conversations
-- 🧩 **Compose capabilities** — Combine Skills to build complex workflows
 
 ### Without Skills:
 ```
@@ -160,11 +159,11 @@ Skills leverage a **three-level loading** strategy:
 
 ```mermaid
 flowchart LR
-    A[🚀 Startup] --> B[📋 Level 1\nMetadata]
-    B --> C{Relevant\ntask?}
-    C -->|Yes| D[📖 Level 2\nSKILL.md body]
+    A[🚀 Startup] --> B[📋 Level Metadata]
+    B --> C{Relevant task?}
+    C -->|Yes| D[📖 Level 2 SKILL.md body]
     D --> E{Need\ndetails?}
-    E -->|Yes| F[📦 Level 3\nBundled files]
+    E -->|Yes| F[📦 Level 3 Bundled files]
     C -->|No| G[⏭️ Skip]
     E -->|No| H[✅ Execute]
     F --> H
@@ -216,11 +215,11 @@ Scripts are executed — their code never enters context, only the output.
 Every Skill requires a `SKILL.md` file with **YAML frontmatter**:
 
 ```markdown
----
 name: pdf-processing
 description: Extract text and tables from PDF files, fill forms,
   merge documents. Use when working with PDF files or when the user
   mentions PDFs, forms, or document extraction.
+  
 ---
 
 # PDF Processing
