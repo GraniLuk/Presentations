@@ -140,6 +140,11 @@ Skills differ from prompts — they **load on-demand** and eliminate the need to
 Think of Skills as the difference between telling someone the same thing every day vs giving them a reference manual.
 A Skill is like a comprehensive onboarding document — once created, it's automatically used whenever relevant.
 Unlike prompts which are conversation-level, Skills persist and are reusable.
+An agent skill is a folder of instructions, scripts, and reference files that teaches your AI agent how to handle a specific task. Think of it as institutional knowledge made executable. Instead of pasting a wall of context into every conversation, you define it once in a SKILL.md file, and Copilot (or Claude) loads it automatically when the task is relevant.
+
+Skills can be as simple as a few lines of instructions or as complex as multi-file packages with executable code. The best skills encode your team's standards in a reusable, shareable package — essentially turning Claude from a general-purpose assistant into a specialized expert for a specific workflow.
+
+Skills where originally introduced in Claude but are now also available in VS Code through GitHub Copilot's Agent Skills integration. The format is the same across all of them, so a skill you write once is portable.
 -->
 
 ---
