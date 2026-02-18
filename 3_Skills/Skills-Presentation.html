@@ -493,7 +493,6 @@ section table td {
 <ul>
 <li><img class="emoji" draggable="false" alt="🎓" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f393.svg" data-marp-twemoji=""/> <strong>Specialize the agent</strong> — Tailor capabilities for domain-specific tasks</li>
 <li><img class="emoji" draggable="false" alt="🔄" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f504.svg" data-marp-twemoji=""/> <strong>Reduce repetition</strong> — Create once, use automatically across conversations</li>
-<li><img class="emoji" draggable="false" alt="🧩" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f9e9.svg" data-marp-twemoji=""/> <strong>Compose capabilities</strong> — Combine Skills to build complex workflows</li>
 </ul>
 <h3 id="without-skills">Without Skills:</h3>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code>You: &quot;Remember to always filter test accounts, use UTC timestamps,
@@ -880,11 +879,11 @@ section table td {
 ;color:#eaeaea;background-color:#1a1a2e;background-image:none;" data-marpit-pagination-total="26">
 <h1 id="%F0%9F%8F%97%EF%B8%8F-skill-structure--anatomy-of-skillmd"><img class="emoji" draggable="false" alt="🏗️" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3d7.svg" data-marp-twemoji=""/> Skill Structure — Anatomy of SKILL.md</h1>
 <p>Every Skill requires a <code>SKILL.md</code> file with <strong>YAML frontmatter</strong>:</p>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-markdown">---
-name: pdf-processing
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-markdown">name: pdf-processing
 description: Extract text and tables from PDF files, fill forms,
   merge documents. Use when working with PDF files or when the user
-<span class="hljs-section">  mentions PDFs, forms, or document extraction.
+  mentions PDFs, forms, or document extraction.
+<span class="hljs-section">  
 ---</span>
 
 <span class="hljs-section"># PDF Processing</span>

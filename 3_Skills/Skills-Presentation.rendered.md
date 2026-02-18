@@ -131,7 +131,6 @@ Unlike prompts which are conversation-level, Skills persist and are reusable.
 
 - 🎓 **Specialize the agent** — Tailor capabilities for domain-specific tasks
 - 🔄 **Reduce repetition** — Create once, use automatically across conversations
-- 🧩 **Compose capabilities** — Combine Skills to build complex workflows
 
 ### Without Skills:
 ```
@@ -206,11 +205,11 @@ Scripts are executed — their code never enters context, only the output.
 Every Skill requires a `SKILL.md` file with **YAML frontmatter**:
 
 ```markdown
----
 name: pdf-processing
 description: Extract text and tables from PDF files, fill forms,
   merge documents. Use when working with PDF files or when the user
   mentions PDFs, forms, or document extraction.
+  
 ---
 
 # PDF Processing
