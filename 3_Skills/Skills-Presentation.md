@@ -286,6 +286,7 @@ Keep SKILL.md body under 500 lines for optimal performance.
 
 ---
 
+<!-- _class: compact -->
 # 📐 Core Principle 2: Degrees of Freedom
 
 Match **specificity** to the task's fragility:
