@@ -45,6 +45,25 @@ style: |
     background-color: #2d2d44;
     padding: 1em;
   }
+  .compact {
+    font-size: 0.9em;
+  }
+  .compact h1 {
+    margin-bottom: 0.2em;
+  }
+  .compact h3 {
+    margin-top: 0.6em;
+  }
+  .compact table {
+    font-size: 0.7em;
+  }
+  .compact ul {
+    margin-top: 0.3em;
+    font-size: 0.9em;
+  }
+  .compact blockquote {
+    margin-bottom: 0.6em;
+  }
   table {
     font-size: 0.8em;
     color: #1a1a2e;
@@ -209,7 +228,7 @@ name: pdf-processing
 description: Extract text and tables from PDF files, fill forms,
   merge documents. Use when working with PDF files or when the user
   mentions PDFs, forms, or document extraction.
-  
+
 ---
 
 # PDF Processing
@@ -238,23 +257,7 @@ Reference files are linked but only loaded when needed.
 
 ---
 
-# 📁 Directory Structure
-
-A Skill can be simple or complex:
-
-![w:auto h:300](assets/mermaid/mermaid-2.svg)
-
-### Rule: **Keep references one level deep** from SKILL.md.
-
-<!--
-Start simple — many effective Skills are just a single SKILL.md file.
-As your Skill grows, split into separate files for progressive disclosure.
-But NEVER create deeply nested references — Claude may partially read them.
-All reference files should link directly from SKILL.md.
--->
-
----
-
+<!-- _class: compact -->
 # 📐 Core Principle 1: Conciseness
 
 > The **context window** is a public good. Your Skill shares it with everything else.
@@ -321,7 +324,7 @@ Match your instruction specificity to how fragile the operation is.
 
 # 🌍 Where Skills Work
 
-![w:auto h:300](assets/mermaid/mermaid-3.svg)
+![w:auto h:300](assets/mermaid/mermaid-2.svg)
 
 ### ⚠️ Skills do NOT sync across surfaces
 Upload/configure separately for each platform.
@@ -338,7 +341,7 @@ Important caveat: Skills don't sync between platforms — you need to set them u
 
 # ✍️ Creating a Skill — Step by Step
 
-![w:auto h:300](assets/mermaid/mermaid-4.svg)
+![w:auto h:300](assets/mermaid/mermaid-3.svg)
 
 ### Step 1: Complete a task with normal prompting first
 
@@ -414,7 +417,7 @@ Task Progress:
 
 ### Implement feedback loops:
 
-![w:auto h:300](assets/mermaid/mermaid-5.svg)
+![w:auto h:300](assets/mermaid/mermaid-4.svg)
 
 Validation loops **greatly improve** output quality.
 
@@ -609,7 +612,7 @@ Better safe than sorry — stick to Skills you've created or from official sourc
 
 # 🔁 Iterative Development
 
-![w:auto h:300](assets/mermaid/mermaid-6.svg)
+![w:auto h:300](assets/mermaid/mermaid-5.svg)
 
 ### Two-agent pattern:
 - **Claude A** (expert) — helps you design and refine the Skill
@@ -713,7 +716,7 @@ That's your first Skill candidate.
 
 # 🗺️ Summary
 
-![w:auto h:300](assets/mermaid/mermaid-7.svg)
+![w:auto h:300](assets/mermaid/mermaid-6.svg)
 
 <!--
 This mindmap summarizes the entire talk.
