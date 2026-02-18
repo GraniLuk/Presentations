@@ -324,7 +324,7 @@ Match your instruction specificity to how fragile the operation is.
 -->
 
 ---
-
+<!-- _class: compact -->
 # ✍️ Naming & Description Best Practices
 
 ### Name format: **gerund form** (verb + -ing)
@@ -358,7 +358,7 @@ Think of description as the "search index" — if your keywords don't match the 
 -->
 
 ---
-
+<!-- _class: compact -->
 # 🔄 Workflows & Feedback Loops
 
 ### Use workflows for complex tasks:
@@ -399,7 +399,7 @@ This catches errors early and prevents cascading failures.
 -->
 
 ---
-
+<!-- _class: compact -->
 # 🛠️ Example: Our Presentation Skill
 
 We use a Skill right here in this repo!
