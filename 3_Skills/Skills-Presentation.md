@@ -45,6 +45,25 @@ style: |
     background-color: #2d2d44;
     padding: 1em;
   }
+  .compact {
+    font-size: 0.9em;
+  }
+  .compact h1 {
+    margin-bottom: 0.2em;
+  }
+  .compact h3 {
+    margin-top: 0.6em;
+  }
+  .compact table {
+    font-size: 0.7em;
+  }
+  .compact ul {
+    margin-top: 0.3em;
+    font-size: 0.9em;
+  }
+  .compact blockquote {
+    margin-bottom: 0.6em;
+  }
   table {
     font-size: 0.8em;
     color: #1a1a2e;
@@ -248,6 +267,7 @@ Reference files are linked but only loaded when needed.
 
 ---
 
+<!-- _class: compact -->
 # 📐 Core Principle 1: Conciseness
 
 > The **context window** is a public good. Your Skill shares it with everything else.
