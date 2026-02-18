@@ -439,78 +439,15 @@ This is the power of Skills — domain knowledge that persists across conversati
 
 ---
 
-# 🛠️ Example: BigQuery Analytics Skill
+# 🛠️ Example: Upgrade nuget packages
 
+```mermaid
+name: upgrading-nuget-packages
+description: Safely upgrade NuGet packages one at a time by analyzing breaking changes, new features, and required code adjustments. Use when Dependabot suggests package updates, NuKeeper identifies updates, or when the user asks to upgrade a specific package.
 ```
-bigquery-skill/
-├── SKILL.md
-└── reference/
-    ├── finance.md    (revenue metrics, ARR, billing)
-    ├── sales.md      (opportunities, pipeline, accounts)
-    ├── product.md    (API usage, features, adoption)
-    └── marketing.md  (campaigns, attribution, email)
-```
-
-### What SKILL.md contains:
-
-```markdown
-## Rules
-- ALWAYS filter out test accounts (account_type != 'test')
-- Use UTC timestamps for all date comparisons
-- Follow naming convention: {domain}_{metric}_{period}
-
-## Quick search
-Find specific metrics:
-grep -i "revenue" reference/finance.md
-grep -i "pipeline" reference/sales.md
-```
-
-When user asks about revenue → agent reads only `finance.md`. Zero cost for the others.
-
-<!--
-This is a great example of domain-specific organization.
-The Skill contains company-specific rules that Claude can't know — like filtering test accounts.
-Reference files are organized by domain so only relevant schemas load.
-The grep commands help Claude quickly find specific metrics within large reference files.
-This pattern scales well — you can add new domains without increasing the base token cost.
--->
 
 ---
-
-# 🛠️ Example: Code with Utility Scripts
-
-### Pre-made scripts > Generated code
-
-```
-pdf-skill/
-├── SKILL.md
-└── scripts/
-    ├── analyze_form.py    → Extract form fields
-    ├── validate_fields.py → Check for errors
-    └── fill_form.py       → Apply values to PDF
-```
-
-### Why scripts are better than asking the agent to write code:
-
-| Aspect | Script | Generated code |
-|--------|--------|---------------|
-| 🎯 Reliability | Battle-tested | May have bugs |
-| 💰 Token cost | Output only | Full code in context |
-| ⏱️ Speed | Instant execution | Generation time |
-| 🔄 Consistency | Same every time | May vary |
-
-> "Scripts provide deterministic operations without consuming context."
-
-<!--
-This is a subtle but important point.
-When Claude runs a script, the script's CODE never enters the context window. Only the OUTPUT does.
-So a 500-line validation script might produce just "Validation passed" — 2 tokens.
-Compare that to asking Claude to generate equivalent code — that's 500+ tokens in context.
-Pre-made scripts are more reliable, more efficient, and more consistent.
--->
-
----
-
+<!-- _class: compact -->
 # 🚫 Anti-Patterns to Avoid
 
 ### ❌ Over-explaining what the agent already knows
@@ -552,7 +489,7 @@ Time-sensitive info becomes wrong and confusing. Use "current" vs "old patterns"
 -->
 
 ---
-
+<!-- _class: compact -->
 # 🔒 Security Considerations
 
 > ⚠️ Use Skills **only from trusted sources** — those you created yourself or from Anthropic.
@@ -580,40 +517,6 @@ A malicious Skill could look innocent on the surface but contain hidden instruct
 Always audit third-party Skills. Look for network calls, file access, unusual patterns.
 Even trustworthy Skills can be compromised if their external dependencies change.
 Better safe than sorry — stick to Skills you've created or from official sources.
--->
-
----
-
-# 🔁 Iterative Development
-
-```mermaid
-flowchart LR
-    A[👤 You + Claude A\nDesign the Skill] --> B[📝 Create\nSKILL.md]
-    B --> C[🤖 Claude B\nTest with real tasks]
-    C --> D[👀 Observe\nbehavior]
-    D --> E{Working\nwell?}
-    E -->|No| F[🔧 Refine\nwith Claude A]
-    F --> B
-    E -->|Yes| G[✅ Ship it!]
-```
-
-### Two-agent pattern:
-- **Claude A** (expert) — helps you design and refine the Skill
-- **Claude B** (tester) — uses the Skill on real tasks, reveals gaps
-
-### Key observations to track:
-- Does the Skill **activate** when expected?
-- Does the agent read files in the **expected order**?
-- Are any bundled files **never accessed**? (maybe unnecessary)
-- Does the agent **overrely** on one section? (move to SKILL.md)
-
-<!--
-The iterative approach is crucial for effective Skills.
-Don't try to write the perfect Skill on the first attempt.
-Use Claude A to design, Claude B to test, then iterate.
-Watch how the agent actually navigates your Skill — it may surprise you.
-Build evaluations first — at least 3 test scenarios.
-Test with different models if possible — what works for Opus might need more detail for Haiku.
 -->
 
 ---
