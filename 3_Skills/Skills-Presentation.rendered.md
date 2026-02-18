@@ -314,51 +314,7 @@ Match your instruction specificity to how fragile the operation is.
 -->
 
 ---
-
-# 🌍 Where Skills Work
-
-![w:auto h:300](assets/mermaid/mermaid-2.svg)
-
-### ⚠️ Skills do NOT sync across surfaces
-Upload/configure separately for each platform.
-
-<!--
-Skills are available across Claude's ecosystem but each has different capabilities.
-Claude.ai and API support pre-built Skills for PowerPoint, Excel, Word, PDF.
-Claude Code and Agent SDK support only custom Skills.
-VS Code Copilot uses filesystem-based Skills in .github/skills/ directories.
-Important caveat: Skills don't sync between platforms — you need to set them up in each.
--->
-
----
-
-# ✍️ Creating a Skill — Step by Step
-
-![w:auto h:300](assets/mermaid/mermaid-3.svg)
-
-### Step 1: Complete a task with normal prompting first
-
-### Step 2: Identify the reusable pattern
-
-### Step 3: Write SKILL.md
-
-<!--
-### Step 1: Complete a task with normal prompting first
-Notice what context you repeatedly provide.
-
-### Step 2: Identify the reusable pattern
-Table schemas, naming conventions, filtering rules, query patterns.
-
-### Step 3: Write SKILL.md
-Package the knowledge you had to provide manually.
-The most effective development process involves the agent itself!
-Work through a problem first, then extract the reusable pattern.
-Don't start by trying to imagine what the Skill needs — start by doing the work.
-This way you capture actual requirements, not imagined ones.
--->
-
----
-
+<!-- _class: compact -->
 # ✍️ Naming & Description Best Practices
 
 ### Name format: **gerund form** (verb + -ing)
@@ -392,7 +348,7 @@ Think of description as the "search index" — if your keywords don't match the 
 -->
 
 ---
-
+<!-- _class: compact -->
 # 🔄 Workflows & Feedback Loops
 
 ### Use workflows for complex tasks:
@@ -410,7 +366,7 @@ Task Progress:
 
 ### Implement feedback loops:
 
-![w:auto h:300](assets/mermaid/mermaid-4.svg)
+![w:auto h:300](assets/mermaid/mermaid-2.svg)
 
 Validation loops **greatly improve** output quality.
 
@@ -423,7 +379,7 @@ This catches errors early and prevents cascading failures.
 -->
 
 ---
-
+<!-- _class: compact -->
 # 🛠️ Example: Our Presentation Skill
 
 We use a Skill right here in this repo!
@@ -605,7 +561,7 @@ Better safe than sorry — stick to Skills you've created or from official sourc
 
 # 🔁 Iterative Development
 
-![w:auto h:300](assets/mermaid/mermaid-5.svg)
+![w:auto h:300](assets/mermaid/mermaid-3.svg)
 
 ### Two-agent pattern:
 - **Claude A** (expert) — helps you design and refine the Skill
@@ -709,7 +665,7 @@ That's your first Skill candidate.
 
 # 🗺️ Summary
 
-![w:auto h:300](assets/mermaid/mermaid-6.svg)
+![w:auto h:300](assets/mermaid/mermaid-4.svg)
 
 <!--
 This mindmap summarizes the entire talk.
