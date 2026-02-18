@@ -423,7 +423,9 @@ This is the power of Skills — domain knowledge that persists across conversati
 
 ```mermaid
 name: upgrading-nuget-packages
-description: Safely upgrade NuGet packages one at a time by analyzing breaking changes, new features, and required code adjustments. Use when Dependabot suggests package updates, NuKeeper identifies updates, or when the user asks to upgrade a specific package.
+description: Safely upgrade NuGet packages one at a time by analyzing breaking changes,
+ new features, and required code adjustments. Use when Dependabot suggests package updates,
+  NuKeeper identifies updates, or when the user asks to upgrade a specific package.
 ```
 
 ---
