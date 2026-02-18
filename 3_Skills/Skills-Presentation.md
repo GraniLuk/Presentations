@@ -45,23 +45,23 @@ style: |
     background-color: #2d2d44;
     padding: 1em;
   }
-  .compact {
+  section.compact {
     font-size: 0.9em;
   }
-  .compact h1 {
+  section.compact h1 {
     margin-bottom: 0.2em;
   }
-  .compact h3 {
+  section.compact h3 {
     margin-top: 0.6em;
   }
-  .compact table {
+  section.compact table {
     font-size: 0.7em;
   }
-  .compact ul {
+  section.compact ul {
     margin-top: 0.3em;
     font-size: 0.9em;
   }
-  .compact blockquote {
+  section.compact blockquote {
     margin-bottom: 0.6em;
   }
   table {

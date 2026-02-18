@@ -148,6 +148,25 @@ style: |
     background-color: #2d2d44;
     padding: 1em;
   }
+  section.compact {
+    font-size: 0.9em;
+  }
+  section.compact h1 {
+    margin-bottom: 0.2em;
+  }
+  section.compact h3 {
+    margin-top: 0.6em;
+  }
+  section.compact table {
+    font-size: 0.7em;
+  }
+  section.compact ul {
+    margin-top: 0.3em;
+    font-size: 0.9em;
+  }
+  section.compact blockquote {
+    margin-bottom: 0.6em;
+  }
   table {
     font-size: 0.8em;
     color: #1a1a2e;
@@ -258,14 +277,28 @@ Tables render with dark text on light background (ensured by the CSS template):
 > — Matthew Prince, CEO
 ```
 
+### Compact class for dense slides
+
+When a slide has too much content to fit on screen (e.g. large tables, many bullet points, or combined headings + table + list), apply the `compact` class to reduce font sizes and margins:
+
+```markdown
+<!-- _class: compact -->
+# Slide with Lots of Content
+
+| Column A | Column B |
+|----------|----------|
+| ... | ... |
+```
+
+**Important:** Marp puts `_class` on the `<section>` element itself, so compact styles must use `section.compact` (no space) in CSS — not `.compact` (descendant selector). The template already includes the correct selectors.
+
+Prefer splitting content across multiple slides. Use `compact` only when splitting would break the logical flow.
+
 ### Spot directive for special slides
 
 ```markdown
 <!-- _class: lead -->
 # Centered Title Slide
-
-<!-- style: h2 { font-size: 0.8em; } blockquote { font-size: 0.7em; } -->
-# Slide with Dense Content
 ```
 
 Use `_paginate: false` on title slides to hide page numbers.
