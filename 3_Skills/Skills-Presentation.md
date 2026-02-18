@@ -219,7 +219,7 @@ name: pdf-processing
 description: Extract text and tables from PDF files, fill forms,
   merge documents. Use when working with PDF files or when the user
   mentions PDFs, forms, or document extraction.
-  
+
 ---
 
 # PDF Processing
@@ -244,43 +244,6 @@ The frontmatter is critical — name and description are how the agent discovers
 The description should include BOTH what the Skill does AND when to use it.
 The body contains procedural knowledge — workflows, best practices, and guidance.
 Reference files are linked but only loaded when needed.
--->
-
----
-
-# 📁 Directory Structure
-
-A Skill can be simple or complex:
-
-```mermaid
-mindmap
-  root((🧠 Skill))
-    📄 Simple
-      SKILL.md only
-      Self-contained
-      Quick to create
-    📦 Medium
-      SKILL.md
-      REFERENCE.md
-      EXAMPLES.md
-    🏗️ Complex
-      SKILL.md
-      reference/
-        finance.md
-        sales.md
-        product.md
-      scripts/
-        analyze.py
-        validate.py
-```
-
-### Rule: **Keep references one level deep** from SKILL.md.
-
-<!--
-Start simple — many effective Skills are just a single SKILL.md file.
-As your Skill grows, split into separate files for progressive disclosure.
-But NEVER create deeply nested references — Claude may partially read them.
-All reference files should link directly from SKILL.md.
 -->
 
 ---
